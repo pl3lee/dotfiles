@@ -63,7 +63,6 @@ return {
                 update_in_insert = false
             })
 
-            -- Format on save
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('my.lsp', {}),
                 callback = function(args)
@@ -76,32 +75,12 @@ return {
                     vim.keymap.set('n', 'grr', require('telescope.builtin').lsp_references)
                     vim.keymap.set('n', 'grt', require('telescope.builtin').lsp_type_definitions)
 
-
-                    -- Auto-format ("lint") on save.
-                    -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
-                    if not client:supports_method('textDocument/willSaveWaitUntil')
-                        and client:supports_method('textDocument/formatting') then
-                        vim.api.nvim_create_autocmd('BufWritePre', {
-                            group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
-                            buffer = args.buf,
-                            callback = function()
-                                vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
-                            end,
-                        })
-                    end
-                end,
-            })
-
-            -- Prefer LSP folding if client supports it
-            vim.api.nvim_create_autocmd('LspAttach', {
-                callback = function(args)
-                    local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    if not client then return end
+                    -- Prefer LSP folding if client supports it
                     if client:supports_method('textDocument/foldingRange') then
                         local win = vim.api.nvim_get_current_win()
                         vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
                     end
-                end
+                end,
             })
         end
     },
@@ -116,5 +95,28 @@ return {
             },
             signature = { enabled = true }
         }
-    }
+    },
+    { -- Autoformat
+        'stevearc/conform.nvim',
+        event = { 'BufWritePre' },
+        cmd = { 'ConformInfo' },
+        opts = {
+            notify_on_error = false,
+            format_on_save = function(bufnr)
+                return {
+                    timeout_ms = 500,
+                    lsp_format = 'fallback',
+                }
+            end,
+            formatters_by_ft = {
+                lua = { 'stylua' },
+                python = { 'autopep8' },
+                go = { 'gofmt' },
+                typescript = { "biome" },
+                typescriptreact = { "biome" },
+                javascript = { "biome" },
+                javascriptreact = { "biome" },
+            },
+        },
+    },
 }
