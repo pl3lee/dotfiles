@@ -11,24 +11,38 @@ return {
                     },
                 },
             },
+            {
+                "williamboman/mason.nvim",
+            },
+            {
+                "williamboman/mason-lspconfig.nvim",
+            },
+
         },
         config = function()
             local capabilities = require('blink.cmp').get_lsp_capabilities()
+            require("mason").setup()
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "lua_ls",
+                    "gopls",
+                    "ts_ls",
+                    "tailwindcss",
+                    "biome",
+                    "pyright",
+                    "marksman"
+                },
+                automatic_installation = true,
+            })
 
             -- Define LSPs here
-            -- Need to install LSPs manually, do :help lspconfig-all for installation instructions
+            -- for manual installation instructions, do :help lspconfig-all
 
             -- lua
             require("lspconfig").lua_ls.setup { capabilities = capabilities }
 
             -- go
             require("lspconfig").gopls.setup { capabilities = capabilities }
-            -- require("lspconfig").golangci_lint_ls.setup {
-            --     capabilities = capabilities,
-            --     init_options = {
-            --         command = { "golangci-lint", "run", "--show-stats=false" }
-            --     }
-            -- }
 
             -- webdev
             require("lspconfig").ts_ls.setup { capabilities = capabilities }
