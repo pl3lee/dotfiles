@@ -26,6 +26,11 @@ vim.opt.scrolloff = 10            -- Keep at least 10 lines visible above and be
 
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
+-- Diff highlighting
+vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#20303b" })
+vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#37222c" })
+vim.api.nvim_set_hl(0, "DiffChange", { bg = "#1f2231" })
+vim.api.nvim_set_hl(0, "DiffText", { bg = "#394b70" })
 vim.opt.diffopt = {
     "internal",            -- Use the internal diff algorithm
     "filler",              -- Show filler lines for missing lines in the diff
@@ -60,12 +65,6 @@ vim.keymap.set('n', '<leader>d', [["_d]], { desc = 'Delete without replacing buf
 
 -- Search and replace
 vim.keymap.set('n', '<leader>r', '*``cgn', { desc = 'Search current word and edit next occurrence' })
-
--- Diff highlighting
-vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#20303b" })
-vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#37222c" })
-vim.api.nvim_set_hl(0, "DiffChange", { bg = "#1f2231" })
-vim.api.nvim_set_hl(0, "DiffText", { bg = "#394b70" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
     desc = "Highlight when yanking text",
