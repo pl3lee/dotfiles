@@ -63,6 +63,10 @@ vim.keymap.set('n', 'N', 'Nzzzv')
 vim.keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste without replacing buffer content' })
 vim.keymap.set('n', '<leader>d', [["_d]], { desc = 'Delete without replacing buffer content' })
 
+-- Quick fix
+vim.keymap.set('n', '<C-j>', '<cmd>cnext<CR>', { desc = 'Quickfix next' })
+vim.keymap.set('n', '<C-k>', '<cmd>cprev<CR>', { desc = 'Quickfix prev' })
+
 -- Search and replace
 vim.keymap.set('n', '<leader>r', '*``cgn', { desc = 'Search current word and edit next occurrence' })
 
