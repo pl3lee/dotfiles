@@ -116,7 +116,7 @@ return {
             end,
             formatters_by_ft = {
                 lua = { 'stylua' },
-                python = { 'autopep8' },
+                python = { 'isort', 'black' },
                 go = { 'gofmt' },
                 typescript = { "biome" },
                 typescriptreact = { "biome" },
