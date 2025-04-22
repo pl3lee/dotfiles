@@ -29,7 +29,7 @@ return {
                     "ts_ls",
                     "tailwindcss",
                     "biome",
-                    "pyright",
+                    "pylsp",
                     "marksman"
                 },
                 automatic_installation = true,
@@ -50,7 +50,7 @@ return {
             require("lspconfig").biome.setup { capabilities = capabilities }
 
             -- python
-            require("lspconfig").pyright.setup { capabilities = capabilities }
+            require("lspconfig").pylsp.setup { capabilities = capabilities }
 
             -- markdown
             require("lspconfig").marksman.setup { capabilities = capabilities }
