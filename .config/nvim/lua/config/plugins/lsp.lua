@@ -50,7 +50,16 @@ return {
             require("lspconfig").biome.setup { capabilities = capabilities }
 
             -- python
-            require("lspconfig").pylsp.setup { capabilities = capabilities }
+            require("lspconfig").pylsp.setup { capabilities = capabilities,
+                settings = {
+                    pylsp = {
+                        plugins = {
+                            pycodestyle = {
+                                enabled = false
+                            }
+                        }
+                    }
+                } }
 
             -- markdown
             require("lspconfig").marksman.setup { capabilities = capabilities }
