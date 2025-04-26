@@ -22,7 +22,7 @@ vim.g.pyindent_open_paren = 0     -- Disable extra indent level after open paren
 vim.opt.undofile = true           -- Enable persistent undo
 vim.opt.inccommand = "split"      -- Show substitution live
 vim.opt.cursorline = true         -- Highlight cursor line
-vim.opt.scrolloff = 10            -- Keep at least 10 lines visible above and below cursor when scrolling
+vim.opt.scrolloff = 999           -- Keeps cursor centered when scrolling
 
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
