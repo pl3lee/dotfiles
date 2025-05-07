@@ -66,7 +66,6 @@ return {
                         plugins = {
                             pycodestyle = {
                                 maxLineLength = 100,
-                                hangClosing = true,
                             }
                         }
                     }
