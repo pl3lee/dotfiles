@@ -12,7 +12,7 @@ return {
                 },
             },
             {
-                "williamboman/mason.nvim",
+                "mason-org/mason.nvim",
             },
             {
                 "williamboman/mason-lspconfig.nvim",
@@ -32,7 +32,6 @@ return {
                     "pylsp",
                     "marksman"
                 },
-                automatic_installation = true,
             })
 
             -- Define LSPs here
