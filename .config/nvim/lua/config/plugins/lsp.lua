@@ -32,6 +32,17 @@ return {
                     "pylsp",
                     "marksman"
                 },
+                automatic_enable = {
+                    exclude = {
+                        "lua_ls",
+                        "gopls",
+                        "ts_ls",
+                        "tailwindcss",
+                        "biome",
+                        "pylsp",
+                        "marksman"
+                    }
+                }
             })
 
             -- Define LSPs here
@@ -54,7 +65,8 @@ return {
                     pylsp = {
                         plugins = {
                             pycodestyle = {
-                                enabled = false
+                                maxLineLength = 100,
+                                hangClosing = true,
                             }
                         }
                     }
@@ -117,7 +129,7 @@ return {
         keys = {
             {
                 '<leader>f',
-                function() require('conform').format({async = true, lsp_format = 'fallback'}) end,
+                function() require('conform').format({ async = true, lsp_format = 'fallback' }) end,
                 mode = '',
                 desc = '[F]ormat buffer',
             }
