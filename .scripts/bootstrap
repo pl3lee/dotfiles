@@ -1,0 +1,20 @@
+cat << 'EOF' >> "$HOME/.zshrc"
+
+# ─── my scripts bootstrap ──────────────────────────────────────
+# add ~/.scripts to PATH
+if [ -d "$HOME/.scripts" ] && [[ ! ":$PATH:" == *":$HOME/.scripts:"* ]]; then
+  export PATH="$HOME/.scripts:$PATH"
+fi
+
+# source custom prompt and editor settings
+if [[ -f "$HOME/.zsh/prompt.zsh" ]]; then
+  source "$HOME/.zsh/prompt.zsh"
+fi
+if [[ -f "$HOME/.zsh/editor.zsh" ]]; then
+  source "$HOME/.zsh/editor.zsh"
+fi
+# ────────────────────────────────────────────────────────────────
+
+EOF
+
+echo "Appended bootstrap block to ~/.zshrc. Please restart your shell or run 'source ~/.zshrc'."
