@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 cat << 'EOF' >> "$HOME/.zshrc"
 
 # ─── my scripts bootstrap ──────────────────────────────────────
@@ -17,4 +19,12 @@ fi
 
 EOF
 
-echo "Appended bootstrap block to ~/.zshrc. Please restart your shell or run 'source ~/.zshrc'."
+# Install homebrew
+if ! command -v brew >/dev/null 2>&1; then
+    echo "Homebrew not found. Installing..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    echo "Homebrew is already installed."
+fi
+
+echo "Done. Please restart your shell or run 'source ~/.zshrc'."
