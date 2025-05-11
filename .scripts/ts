@@ -19,11 +19,27 @@ hydrate() {
     fi
 }
 
+create_session() {
+  local sess=$1
+  local dir=$2
+
+  # 1) create the session (detached) with a first window named "nvim"
+  tmux new-session -d -s "$sess" -c "$dir" -n nvim
+
+  # 2) create a second window named "term" in that same session
+  tmux new-window -t "$sess" -c "$dir" -n term
+
+  # 3) go back to window 1 
+  tmux select-window -t "$sess:1"
+
+  # 4) hydrate if you have a sessionizer
+  hydrate "$sess" "$dir"
+}
+
+
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    # If someone wants to make this extensible, i'll accept
-    # PR
     selected=$(find "$HOME" -mindepth 1 -maxdepth 2 -type d 2>/dev/null | fzf --height=40% --layout=reverse --prompt="Pick dir> ")
 fi
 
@@ -35,13 +51,11 @@ selected_name=$(basename "$selected" | tr . _)
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -ds $selected_name -c $selected
-    hydrate $selected_name $selected
+    create_session "$selected_name" "$selected"
 fi
 
 if ! has_session $selected_name; then
-    tmux new-session -ds $selected_name -c $selected
-    hydrate $selected_name $selected
+    create_session "$selected_name" "$selected"
 fi
 
 switch_to $selected_name

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+brew install neovim
+brew install ripgrep
+brew install fzf
+brew install fd
+brew install tmux
+brew install node
+brew install go
+brew install ghostty
