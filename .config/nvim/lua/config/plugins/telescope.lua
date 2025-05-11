@@ -62,19 +62,24 @@ return {
             })
         end)
 
-        vim.keymap.set('n', '<leader>s/', function()
-            resume_or_run(builtin.live_grep, {
-                grep_open_files = true,
-                prompt_title = 'Live Grep in Open Files',
-                desc = '[S]earch [/] in Open Files',
-            })
+        vim.keymap.set('n', '<leader>ss', function()
+            resume_or_run(builtin.treesitter, { desc = '[S]earch [S]ymbols' })
         end)
 
-        vim.keymap.set('n', '<leader>sn', function()
-            resume_or_run(builtin.find_files, {
-                cwd = vim.fn.stdpath 'config',
-                desc = '[S]earch [N]eovim files',
-            })
+        vim.keymap.set('n', '<leader>gb', function()
+            resume_or_run(builtin.git_branches, { desc = '[G]it [B]ranch' })
+        end)
+
+        vim.keymap.set('n', '<leader>gc', function()
+            resume_or_run(builtin.git_bcommits, { desc = '[G]it Buffer [C]ommits' })
+        end)
+
+        vim.keymap.set('n', '<leader>gs', function()
+            resume_or_run(builtin.git_status, { desc = '[G]it [S]tatus' })
+        end)
+
+        vim.keymap.set('n', '<leader>gl', function()
+            resume_or_run(builtin.git_commits, { desc = '[G]it [L]og' })
         end)
     end
 }

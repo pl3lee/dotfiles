@@ -29,8 +29,8 @@ return {
         config = function(_, opts)
             local chat = require("CopilotChat")
             chat.setup(opts)
-            vim.keymap.set("n", "<leader>gco", function() chat.toggle() end)
-            vim.keymap.set("n", "<leader>gcs", function() chat.stop() end)
+            vim.keymap.set("n", "<leader>co", function() chat.toggle() end)
+            vim.keymap.set("n", "<leader>cs", function() chat.stop() end)
         end
     },
 }
