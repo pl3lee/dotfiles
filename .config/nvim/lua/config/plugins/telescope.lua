@@ -8,8 +8,6 @@ return {
     },
     config = function()
         local builtin = require 'telescope.builtin'
-        local last_picker_time = nil
-        local last_picker = nil
         require('telescope').setup {
             extensions = {
                 fzf = {
@@ -22,7 +20,10 @@ return {
             }
         }
         require('telescope').load_extension('fzf')
-        require("telescope").load_extension('frecency')
+
+        -- Remember search
+        local last_picker_time = nil
+        local last_picker = nil
         local function resume_or_run(picker, opts)
             local current_time = os.time()
             if last_picker == picker and last_picker_time and (current_time - last_picker_time <= 300) then
