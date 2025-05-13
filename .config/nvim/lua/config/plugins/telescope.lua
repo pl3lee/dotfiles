@@ -33,7 +33,7 @@ return {
         local last_picker = nil
         local function resume_or_run(picker, opts)
             opts = opts or {}
-            opts = vim.tbl_deep_extend("keep", opts, { attach_mappings = function(_, map) return true end})
+            opts = vim.tbl_deep_extend("keep", opts, { attach_mappings = function(_, map) return true end })
             local now = os.time()
             if last_picker == picker and last_picker_time and (now - last_picker_time <= 300) then
                 builtin.resume()
@@ -52,7 +52,8 @@ return {
         end)
         vim.keymap.set('n', '<leader>sf', function()
             resume_or_run(frecency_picker, {
-                desc = '[S]earch [F]iles'
+                desc = '[S]earch [F]iles',
+                workspace = "CWD",
             })
         end)
         vim.keymap.set('n', '<leader>sg', function()
