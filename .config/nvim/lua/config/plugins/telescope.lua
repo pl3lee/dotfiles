@@ -4,34 +4,43 @@ return {
     dependencies = {
         'nvim-lua/plenary.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-        'nvim-telescope/telescope-frecency.nvim'
+        'nvim-telescope/telescope-frecency.nvim',
     },
     config = function()
         local builtin = require 'telescope.builtin'
+        local frecency_picker = require('telescope').extensions.frecency.frecency
         require('telescope').setup {
             extensions = {
                 fzf = {
-                    fuzzy = true,                    -- false will only do exact matching
-                    override_generic_sorter = true,  -- override the generic sorter
-                    override_file_sorter = true,     -- override the file sorter
-                    case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                    fuzzy = true,                   -- false will only do exact matching
+                    override_generic_sorter = true, -- override the generic sorter
+                    override_file_sorter = true,    -- override the file sorter
+                    case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
                     -- the default case_mode is "smart_case"
-                }
+                },
+                frecency = {
+                    auto_validate = false,
+                    matcher = "fuzzy",
+                    path_display = { "filename_first" },
+                },
             }
         }
         require('telescope').load_extension('fzf')
+        require('telescope').load_extension('frecency')
 
         -- Remember search
         local last_picker_time = nil
         local last_picker = nil
         local function resume_or_run(picker, opts)
-            local current_time = os.time()
-            if last_picker == picker and last_picker_time and (current_time - last_picker_time <= 300) then
+            opts = opts or {}
+            opts = vim.tbl_deep_extend("keep", opts, { attach_mappings = function(_, map) return true end})
+            local now = os.time()
+            if last_picker == picker and last_picker_time and (now - last_picker_time <= 300) then
                 builtin.resume()
             else
                 picker(opts)
                 last_picker = picker
-                last_picker_time = current_time
+                last_picker_time = now
             end
         end
 
@@ -42,9 +51,8 @@ return {
             resume_or_run(builtin.keymaps, { desc = '[S]earch [K]eymaps' })
         end)
         vim.keymap.set('n', '<leader>sf', function()
-            resume_or_run(builtin.find_files, {
-                find_command = { 'rg', '--files', '--hidden', '--glob', '!.git' },
-                desc = '[S]earch [F]iles',
+            resume_or_run(frecency_picker, {
+                desc = '[S]earch [F]iles'
             })
         end)
         vim.keymap.set('n', '<leader>sg', function()
