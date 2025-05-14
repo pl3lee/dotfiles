@@ -28,67 +28,34 @@ return {
         require('telescope').load_extension('fzf')
         require('telescope').load_extension('frecency')
 
-        -- Remember search
-        local last_picker_time = nil
-        local last_picker = nil
-        local function resume_or_run(picker, opts)
-            opts = opts or {}
-            opts = vim.tbl_deep_extend("keep", opts, { attach_mappings = function(_, map) return true end })
-            local now = os.time()
-            if last_picker == picker and last_picker_time and (now - last_picker_time <= 300) then
-                builtin.resume()
-            else
-                picker(opts)
-                last_picker = picker
-                last_picker_time = now
-            end
-        end
-
-        vim.keymap.set('n', '<leader>sh', function()
-            resume_or_run(builtin.help_tags, { desc = '[S]earch [H]elp' })
-        end)
-        vim.keymap.set('n', '<leader>sk', function()
-            resume_or_run(builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-        end)
+        vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+        vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
         vim.keymap.set('n', '<leader>sf', function()
-            resume_or_run(frecency_picker, {
+            frecency_picker({
                 desc = '[S]earch [F]iles',
                 workspace = "CWD",
             })
         end)
-        vim.keymap.set('n', '<leader>sg', function()
-            resume_or_run(builtin.live_grep, { desc = '[S]earch by [G]rep' })
-        end)
-        vim.keymap.set('n', '<leader>sd', function()
-            resume_or_run(builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-        end)
+        vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+        vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 
         vim.keymap.set('n', '<leader>/', function()
-            resume_or_run(builtin.current_buffer_fuzzy_find, require('telescope.themes').get_dropdown {
+            builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
                 winblend = 10,
                 previewer = false,
-                desc = '[/] Fuzzily search in current buffer',
             })
-        end)
+        end, { desc = '[/] Fuzzily search in current buffer' })
 
-        vim.keymap.set('n', '<leader>ss', function()
-            resume_or_run(builtin.treesitter, { desc = '[S]earch [S]ymbols' })
-        end)
+        vim.keymap.set('n', '<leader>ss', builtin.treesitter, { desc = '[S]earch [S]ymbols' })
 
-        vim.keymap.set('n', '<leader>gb', function()
-            resume_or_run(builtin.git_branches, { desc = '[G]it [B]ranch' })
-        end)
+        vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = '[G]it [B]ranch' })
 
-        vim.keymap.set('n', '<leader>gc', function()
-            resume_or_run(builtin.git_bcommits, { desc = '[G]it Buffer [C]ommits' })
-        end)
+        vim.keymap.set('n', '<leader>gc', builtin.git_bcommits, { desc = '[G]it Buffer [C]ommits' })
 
-        vim.keymap.set('n', '<leader>gs', function()
-            resume_or_run(builtin.git_status, { desc = '[G]it [S]tatus' })
-        end)
+        vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = '[G]it [S]tatus' })
 
-        vim.keymap.set('n', '<leader>gl', function()
-            resume_or_run(builtin.git_commits, { desc = '[G]it [L]og' })
-        end)
+        vim.keymap.set('n', '<leader>gl', builtin.git_commits, { desc = '[G]it [L]og' })
+
+        vim.keymap.set('n', '<leader>tr', builtin.resume, { desc = '[T]elescope [R]esume' })
     end
 }
