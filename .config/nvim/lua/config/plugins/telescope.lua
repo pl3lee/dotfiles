@@ -7,6 +7,7 @@ return {
         'nvim-telescope/telescope-frecency.nvim',
         "nvim-telescope/telescope-live-grep-args.nvim",
     },
+
     config = function()
         local builtin = require 'telescope.builtin'
         local frecency_picker = require('telescope').extensions.frecency.frecency
@@ -35,12 +36,13 @@ return {
                             ["<C-space>"] = lga_actions.to_fuzzy_refine,
                         }
                     }
-                }
+                },
             }
         }
         require('telescope').load_extension('fzf')
         require('telescope').load_extension('frecency')
         require('telescope').load_extension('live_grep_args')
+
 
         vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
         vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
