@@ -89,14 +89,31 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- Copy absolute path to clipboard
 vim.api.nvim_create_user_command("CopyAbsPath", function()
-    local path = vim.fn.expand("%:p")
-    vim.fn.setreg("+", path)
-    vim.notify('Copied "' .. path .. '" to the clipboard!')
+    local abs_path = vim.fn.expand("%:p")
+    if abs_path == "" or abs_path == vim.fn.getcwd() then
+        vim.notify("No file name to copy absolute path from.", vim.log.levels.WARN, { title = "Clipboard" })
+        return
+    end
+
+    vim.fn.setreg("+", abs_path)
+    vim.notify('Copied absolute path: "' .. abs_path .. '"', vim.log.levels.INFO, { title = "Clipboard" })
 end, {})
 
 -- Copy relative path to clipboard
 vim.api.nvim_create_user_command("CopyRelPath", function()
-    local path = vim.fn.expand("%")
-    vim.fn.setreg("+", path)
-    vim.notify('Copied "' .. path .. '" to the clipboard!')
+    local abs_path = vim.fn.expand("%:p") -- Get the full absolute path first
+    if abs_path == "" or abs_path == vim.fn.getcwd() then
+        vim.notify("No file name to copy relative path from.", vim.log.levels.WARN, { title = "Clipboard" })
+        return
+    end
+
+    -- Now make it relative to the current working directory
+    local rel_path = vim.fn.fnamemodify(abs_path, ":.")
+
+    -- If the file is in the current directory, rel_path will just be the filename.
+    -- If it's in a subdirectory, it'll be e.g., "subdir/file.txt".
+    -- If it's in a parent directory, it'll be e.g., "../file.txt".
+
+    vim.fn.setreg("+", rel_path)
+    vim.notify('Copied relative path: "' .. rel_path .. '"', vim.log.levels.INFO, { title = "Clipboard" })
 end, {})
