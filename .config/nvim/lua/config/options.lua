@@ -26,12 +26,12 @@ vim.opt.scrolloff = 999           -- Keeps cursor centered when scrolling
 
 -- remap j → gj, k → gk when no count is given:
 vim.keymap.set('n', 'j', function()
-  return vim.v.count == 0 and 'gj' or 'j'
-end, {expr = true, silent = true})
+    return vim.v.count == 0 and 'gj' or 'j'
+end, { expr = true, silent = true })
 
 vim.keymap.set('n', 'k', function()
-  return vim.v.count == 0 and 'gk' or 'k'
-end, {expr = true, silent = true})
+    return vim.v.count == 0 and 'gk' or 'k'
+end, { expr = true, silent = true })
 
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
@@ -86,3 +86,17 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         vim.hl.on_yank()
     end
 })
+
+-- Copy absolute path to clipboard
+vim.api.nvim_create_user_command("CopyAbsPath", function()
+    local path = vim.fn.expand("%:p")
+    vim.fn.setreg("+", path)
+    vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, {})
+
+-- Copy relative path to clipboard
+vim.api.nvim_create_user_command("CopyRelPath", function()
+    local path = vim.fn.expand("%")
+    vim.fn.setreg("+", path)
+    vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, {})
