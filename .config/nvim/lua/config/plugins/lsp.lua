@@ -63,9 +63,25 @@ return {
             require("lspconfig").pylsp.setup { capabilities = capabilities,
                 settings = {
                     pylsp = {
+                        rope = {
+                            ropeFolder = vim.fn.stdpath("cache") .. "/pylsp_rope_projects/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") .. "/.ropeproject"
+                        },
                         plugins = {
                             pycodestyle = {
                                 maxLineLength = 100,
+                            },
+                            rope_autoimport = {
+                                enabled = true,
+                                completions = {
+                                    enabled = true,
+                                },
+                                code_actions = {
+                                    enabled = true,
+                                },
+                                memory = true,
+                            },
+                            rope_completion = {
+                                enabled = true,
                             }
                         }
                     }
