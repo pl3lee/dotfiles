@@ -13,6 +13,11 @@ return {
         local frecency_picker = require('telescope').extensions.frecency.frecency
         local lga_actions = require('telescope-live-grep-args.actions')
         require('telescope').setup {
+            defaults = {
+                path_display = {
+                    "smart"
+                }
+            },
             extensions = {
                 fzf = {
                     fuzzy = true,                   -- false will only do exact matching
