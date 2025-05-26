@@ -67,25 +67,42 @@ return {
                             ropeFolder = vim.fn.stdpath("cache") .. "/pylsp_rope_projects/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") .. "/.ropeproject"
                         },
                         plugins = {
-                            pycodestyle = {
+                            flake8 = {
+                                enabled = true,
                                 maxLineLength = 100,
                             },
+                            mypy = {
+                                enabled = true,
+                                live_mode = false,
+                            },
+                            pycodestyle = {
+                                enabled = false,
+                            },
+                            pylint = {
+                                enabled = false,
+                            },
+                            autopep8 = { enabled = false },
+                            yapf = { enabled = false },
+                            black = { enabled = false },
+                            isort = { enabled = false },
+
+                            jedi_completion = { enabled = true },
+                            jedi_definition = { enabled = true },
+                            jedi_hover = { enabled = true },
+                            jedi_references = { enabled = true },
+                            jedi_signature_help = { enabled = true },
+                            jedi_symbols = { enabled = true },
                             rope_autoimport = {
                                 enabled = true,
-                                completions = {
-                                    enabled = true,
-                                },
-                                code_actions = {
-                                    enabled = true,
-                                },
-                                memory = true,
                             },
                             rope_completion = {
                                 enabled = true,
                             }
+
                         }
                     }
-                } }
+                }
+            }
 
             -- markdown
             require("lspconfig").marksman.setup { capabilities = capabilities }
@@ -151,16 +168,15 @@ return {
         },
         opts = {
             notify_on_error = false,
-            -- format_on_save = function(bufnr)
-            --     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
-            --     return {
-            --         timeout_ms = 5000,
-            --         lsp_format = 'fallback',
-            --     }
-            -- end,
+            format_on_save = function(bufnr)
+                if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat or vim.bo[bufnr].filetype == 'python' then return end
+                return {
+                    timeout_ms = 5000,
+                    lsp_format = 'fallback',
+                }
+            end,
             formatters_by_ft = {
                 lua = { 'stylua' },
-                python = { 'isort', 'black' },
                 go = { 'gofmt' },
                 typescript = { "biome" },
                 typescriptreact = { "biome" },
