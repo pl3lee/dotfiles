@@ -92,6 +92,11 @@ return {
                             jedi_references = { enabled = true },
                             jedi_signature_help = { enabled = true },
                             jedi_symbols = { enabled = true },
+                            jedi = {
+                                extra_paths = {
+                                    "/Users/billy.lee/workspace/webserver/packages/coalition-persistent-data-manager"
+                                },
+                            },
                             rope_autoimport = {
                                 enabled = true,
                             },
