@@ -73,7 +73,7 @@ return {
                             },
                             mypy = {
                                 enabled = true,
-                                live_mode = false,
+                                live_mode = true,
                             },
                             pycodestyle = {
                                 enabled = false,
