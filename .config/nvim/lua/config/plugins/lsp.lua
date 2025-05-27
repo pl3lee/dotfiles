@@ -29,7 +29,8 @@ return {
                     "ts_ls",
                     "tailwindcss",
                     "biome",
-                    "pylsp",
+                    -- "pylsp",
+                    "pyright",
                     "marksman"
                 },
                 automatic_enable = {
@@ -39,7 +40,8 @@ return {
                         "ts_ls",
                         "tailwindcss",
                         "biome",
-                        "pylsp",
+                        -- "pylsp",
+                        "pyright",
                         "marksman"
                     }
                 }
@@ -59,55 +61,79 @@ return {
             require("lspconfig").tailwindcss.setup { capabilities = capabilities }
             require("lspconfig").biome.setup { capabilities = capabilities }
 
-            -- python
-            require("lspconfig").pylsp.setup { capabilities = capabilities,
-                settings = {
-                    pylsp = {
-                        rope = {
-                            ropeFolder = vim.fn.stdpath("cache") .. "/pylsp_rope_projects/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") .. "/.ropeproject"
+            require("lspconfig").pyright.setup { capabilities = capabilities,
+                python = {
+                    disableLanguageServices = false,
+                    disableOrganizeImports = true,
+                    disableTaggedHints = false,
+                    analysis = {
+                        authSearchPaths = true,
+                        diagnosticMode = "workspace",
+                        useLibraryCodeForTypes = true,
+                        autoImportCompletions = true,
+                        typeCheckingMode = "standard",
+                        extraPaths = {
+                            "/Users/billy.lee/workspace/webserver/packages/coalition-persistent-data-manager"
                         },
-                        plugins = {
-                            flake8 = {
-                                enabled = true,
-                                maxLineLength = 100,
-                            },
-                            mypy = {
-                                enabled = true,
-                                live_mode = true,
-                            },
-                            pycodestyle = {
-                                enabled = false,
-                            },
-                            pylint = {
-                                enabled = false,
-                            },
-                            autopep8 = { enabled = false },
-                            yapf = { enabled = false },
-                            black = { enabled = false },
-                            isort = { enabled = false },
-
-                            jedi_completion = { enabled = true },
-                            jedi_definition = { enabled = true },
-                            jedi_hover = { enabled = true },
-                            jedi_references = { enabled = true },
-                            jedi_signature_help = { enabled = true },
-                            jedi_symbols = { enabled = true },
-                            jedi = {
-                                extra_paths = {
-                                    "/Users/billy.lee/workspace/webserver/packages/coalition-persistent-data-manager"
-                                },
-                            },
-                            rope_autoimport = {
-                                enabled = true,
-                            },
-                            rope_completion = {
-                                enabled = true,
-                            }
-
+                        include = {
+                            "/Users/billy.lee/workspace/webserver/packages/coalition-persistent-data-manager"
                         }
                     }
                 }
+
             }
+
+            -- python
+            -- require("lspconfig").pylsp.setup { capabilities = capabilities,
+            --     settings = {
+            --         pylsp = {
+            --             rope = {
+            --                 ropeFolder = vim.fn.stdpath("cache") .. "/pylsp_rope_projects/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") .. "/.ropeproject"
+            --             },
+            --             plugins = {
+            --                 flake8 = { -- lint, like invalid variables
+            --                     enabled = false,
+            --                 },
+            --                 pyflakes = { -- detects undefined names, unused vars
+            --                     enabled = false,
+            --                 },
+            --                 mccabe = { -- measure complexity
+            --                     enabled = false,
+            --                 },
+            --                 pycodestyle = { -- checks style
+            --                     enabled = false,
+            --                 },
+            --                 pylint = { -- replaces pyflakes and pycodestyle, mccabe
+            --                     enabled = true,
+            --                     args = { "-j", "0" }
+            --                 },
+            --                 autopep8 = { enabled = false },
+            --                 yapf = { enabled = false },
+            --                 black = { enabled = false },
+            --                 isort = { enabled = false },
+            --
+            --                 jedi_completion = { enabled = true },
+            --                 jedi_definition = { enabled = true },
+            --                 jedi_hover = { enabled = true },
+            --                 jedi_references = { enabled = true },
+            --                 jedi_signature_help = { enabled = true },
+            --                 jedi_symbols = { enabled = true },
+            --                 jedi = {
+            --                     extra_paths = {
+            --                         "/Users/billy.lee/workspace/webserver/packages/coalition-persistent-data-manager"
+            --                     },
+            --                 },
+            --                 rope_autoimport = {
+            --                     enabled = true,
+            --                 },
+            --                 rope_completion = {
+            --                     enabled = true,
+            --                 }
+            --
+            --             }
+            --         }
+            --     }
+            -- }
 
             -- markdown
             require("lspconfig").marksman.setup { capabilities = capabilities }
