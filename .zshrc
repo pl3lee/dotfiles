@@ -17,3 +17,5 @@ fi
 if [[ -f "$HOME/.zsh/editor.zsh" ]]; then
   source "$HOME/.zsh/editor.zsh"
 fi
+
+. "$HOME/.local/bin/env"
