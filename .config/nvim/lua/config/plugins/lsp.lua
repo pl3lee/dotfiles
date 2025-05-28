@@ -64,6 +64,7 @@ return {
                 capabilities = capabilities,
                 settings = {
                     python = {
+                        venvPath = "./.venv/",
                         disableLanguageServices = false,
                         disableOrganizeImports = true,
                         disableTaggedHints = false,
@@ -78,7 +79,7 @@ return {
                                 "rating_model",
                                 "service_clients"
                             }
-                        }
+                        },
                     }
                 }
             }
