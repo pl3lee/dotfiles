@@ -4,16 +4,20 @@ return {
     dependencies = {
         'nvim-lua/plenary.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-        'nvim-telescope/telescope-frecency.nvim',
         "nvim-telescope/telescope-live-grep-args.nvim",
     },
 
     config = function()
         local builtin = require 'telescope.builtin'
-        local frecency_picker = require('telescope').extensions.frecency.frecency
+        local actions = require('telescope.actions')
         local lga_actions = require('telescope-live-grep-args.actions')
         require('telescope').setup {
             defaults = {
+                mappings = {
+                    i = {
+                        ["<C-s>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                    },
+                },
                 path_display = {
                     "smart"
                 }
@@ -25,11 +29,6 @@ return {
                     override_file_sorter = true,    -- override the file sorter
                     case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
                     -- the default case_mode is "smart_case"
-                },
-                frecency = {
-                    auto_validate = false,
-                    matcher = "fuzzy",
-                    path_display = { "filename_first" },
                 },
                 live_grep_args = {
                     auto_quoting = true,
@@ -45,18 +44,12 @@ return {
             }
         }
         require('telescope').load_extension('fzf')
-        require('telescope').load_extension('frecency')
         require('telescope').load_extension('live_grep_args')
 
 
         vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
         vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-        vim.keymap.set('n', '<leader>sf', function()
-            frecency_picker({
-                desc = '[S]earch [F]iles',
-                workspace = "CWD",
-            })
-        end)
+        vim.keymap.set('n', '<leader>sf', builtin.find_files)
         vim.keymap.set('n', '<leader>sg', require('telescope').extensions.live_grep_args.live_grep_args,
             { desc = '[S]earch by [G]rep' })
         vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
@@ -69,6 +62,10 @@ return {
         end, { desc = '[/] Fuzzily search in current buffer' })
 
         vim.keymap.set('n', '<leader>ss', builtin.treesitter, { desc = '[S]earch [S]ymbols' })
+
+        vim.keymap.set('n', '<leader>sm', builtin.marks, { desc = '[S]earch [M]arks' })
+
+        vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
 
         vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = '[G]it [B]ranch' })
 
