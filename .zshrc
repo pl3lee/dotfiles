@@ -14,8 +14,7 @@ if [ -d "$HOME/.scripts" ] && [[ ! ":$PATH:" == *":$HOME/.scripts:"* ]]; then
   export PATH="$HOME/.scripts:$PATH"
 fi
 
-if [[ -f "$HOME/.zsh/editor.zsh" ]]; then
-  source "$HOME/.zsh/editor.zsh"
-fi
+export EDITOR="nvim"
+export VISUAL="nvim" 
 
 . "$HOME/.local/bin/env"
