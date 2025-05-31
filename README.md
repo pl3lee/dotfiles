@@ -1,9 +1,6 @@
 # dotfiles
 ## Setup
 ```
-# linux
-echo "alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'" >> $HOME/.bashrc
-# macos
 echo "alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'" >> $HOME/.zshrc
 
 # now restart terminal
