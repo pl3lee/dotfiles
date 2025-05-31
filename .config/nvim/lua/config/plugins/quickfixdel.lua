@@ -1,5 +1,5 @@
 return {
     {
-        "shmerl/quickfixdel"
-    }
+        "shmerl/quickfixdel",
+    },
 }

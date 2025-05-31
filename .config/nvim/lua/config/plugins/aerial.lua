@@ -1,9 +1,9 @@
 return {
     {
-        'stevearc/aerial.nvim',
+        "stevearc/aerial.nvim",
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
-            "nvim-tree/nvim-web-devicons"
+            "nvim-tree/nvim-web-devicons",
         },
         config = function()
             require("aerial").setup({
@@ -12,9 +12,8 @@ return {
                     vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
                     vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
                 end,
-
             })
             vim.keymap.set("n", "<leader>o", "<cmd>AerialToggle!<CR>")
-        end
-    }
+        end,
+    },
 }

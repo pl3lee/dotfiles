@@ -1,20 +1,20 @@
 return {
     {
-        'echasnovski/mini.nvim',
+        "echasnovski/mini.nvim",
         config = function()
-            local icons = require 'mini.icons'
-            icons.setup {}
+            local icons = require("mini.icons")
+            icons.setup({})
 
-            local statusline = require 'mini.statusline'
-            statusline.setup { use_icons = true }
+            local statusline = require("mini.statusline")
+            statusline.setup({ use_icons = true })
 
-            local minifiles = require 'mini.files'
-            minifiles.setup {
+            local minifiles = require("mini.files")
+            minifiles.setup({
                 mappings = {
                     synchronize = "w",
                     go_in_plus = "<CR>",
                 },
-            }
+            })
 
             -- Opens Mini Files at current working directory
             vim.keymap.set("n", "\\", function()
@@ -24,17 +24,17 @@ return {
                 MiniFiles.reveal_cwd()
             end, { desc = "Open Mini Files" })
 
-            local autopairs = require 'mini.pairs'
-            autopairs.setup {}
+            local autopairs = require("mini.pairs")
+            autopairs.setup({})
 
-            local surround = require 'mini.surround'
-            surround.setup {}
+            local surround = require("mini.surround")
+            surround.setup({})
 
-            local indentscope = require 'mini.indentscope'
-            indentscope.setup {}
+            local indentscope = require("mini.indentscope")
+            indentscope.setup({})
 
-            local jump2d = require 'mini.jump2d'
-            jump2d.setup {}
-        end
-    }
+            local jump2d = require("mini.jump2d")
+            jump2d.setup({})
+        end,
+    },
 }

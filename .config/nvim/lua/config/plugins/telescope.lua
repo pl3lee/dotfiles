@@ -1,17 +1,19 @@
 return {
-    'nvim-telescope/telescope.nvim',
-    branch = 'master',
+    "nvim-telescope/telescope.nvim",
+    branch = "master",
     dependencies = {
-        'nvim-lua/plenary.nvim',
-        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-        "nvim-telescope/telescope-live-grep-args.nvim",
+        "nvim-lua/plenary.nvim",
+        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
 
     config = function()
-        local builtin = require 'telescope.builtin'
-        local actions = require('telescope.actions')
-        local lga_actions = require('telescope-live-grep-args.actions')
-        require('telescope').setup {
+        local builtin = require("telescope.builtin")
+        local actions = require("telescope.actions")
+        local pickers = require("telescope.pickers")
+        local finders = require("telescope.finders")
+        local make_entry = require("telescope.make_entry")
+        local conf = require("telescope.config").values
+        require("telescope").setup({
             defaults = {
                 mappings = {
                     i = {
@@ -19,62 +21,97 @@ return {
                     },
                 },
                 path_display = {
-                    "smart"
-                }
+                    "smart",
+                },
             },
             extensions = {
                 fzf = {
-                    fuzzy = true,                   -- false will only do exact matching
+                    fuzzy = true, -- false will only do exact matching
                     override_generic_sorter = true, -- override the generic sorter
-                    override_file_sorter = true,    -- override the file sorter
-                    case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+                    override_file_sorter = true, -- override the file sorter
+                    case_mode = "smart_case", -- or "ignore_case" or "respect_case"
                     -- the default case_mode is "smart_case"
                 },
-                live_grep_args = {
-                    auto_quoting = true,
-                    mappings = {
-                        i = {
-                            ["<C-k>"] = lga_actions.quote_prompt(),
-                            ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
-                            -- freeze the current list and start a fuzzy search in the frozen list
-                            ["<C-space>"] = lga_actions.to_fuzzy_refine,
-                        }
-                    }
-                },
-            }
-        }
-        require('telescope').load_extension('fzf')
-        require('telescope').load_extension('live_grep_args')
+            },
+        })
+        require("telescope").load_extension("fzf")
 
+        local live_multigrep = function(opts)
+            opts = opts or {}
+            opts.cwd = opts.cwd or vim.uv.cwd()
 
-        vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-        vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-        vim.keymap.set('n', '<leader>sf', builtin.find_files)
-        vim.keymap.set('n', '<leader>sg', require('telescope').extensions.live_grep_args.live_grep_args,
-            { desc = '[S]earch by [G]rep' })
-        vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+            local finder = finders.new_async_job({
+                command_generator = function(prompt)
+                    if not prompt or prompt == "" then
+                        return nil
+                    end
+                    local pieces = vim.split(prompt, "  ")
+                    local args = { "rg" }
+                    if pieces[1] then
+                        table.insert(args, "-e")
+                        table.insert(args, pieces[1])
+                    end
 
-        vim.keymap.set('n', '<leader>/', function()
-            builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+                    -- Additional filtering
+                    if pieces[2] then
+                        table.insert(args, "-g")
+                        table.insert(args, pieces[2])
+                    end
+
+                    return (function()
+                        vim.list_extend(args, {
+                            "--color=never",
+                            "--no-heading",
+                            "--with-filename",
+                            "--line-number",
+                            "--column",
+                            "--smart-case",
+                        })
+                        return args
+                    end)()
+                end,
+                entry_maker = make_entry.gen_from_vimgrep(opts),
+                cwd = opts.cwd,
+            })
+
+            pickers
+                .new(opts, {
+                    debounce = 100,
+                    prompt_title = "Multi Grep",
+                    finder = finder,
+                    previewer = conf.grep_previewer(opts),
+                    sorter = require("telescope.sorters").empty(),
+                })
+                :find()
+        end
+
+        vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+        vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
+        vim.keymap.set("n", "<leader>sf", builtin.find_files)
+        vim.keymap.set("n", "<leader>sg", live_multigrep)
+        vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
+
+        vim.keymap.set("n", "<leader>/", function()
+            builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
                 winblend = 10,
                 previewer = false,
-            })
-        end, { desc = '[/] Fuzzily search in current buffer' })
+            }))
+        end, { desc = "[/] Fuzzily search in current buffer" })
 
-        vim.keymap.set('n', '<leader>ss', builtin.treesitter, { desc = '[S]earch [S]ymbols' })
+        vim.keymap.set("n", "<leader>ss", builtin.treesitter, { desc = "[S]earch [S]ymbols" })
 
-        vim.keymap.set('n', '<leader>sm', builtin.marks, { desc = '[S]earch [M]arks' })
+        vim.keymap.set("n", "<leader>sm", builtin.marks, { desc = "[S]earch [M]arks" })
 
-        vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
+        vim.keymap.set("n", "<leader>sq", builtin.quickfix, { desc = "[S]earch [Q]uickfix" })
 
-        vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = '[G]it [B]ranch' })
+        vim.keymap.set("n", "<leader>gb", builtin.git_branches, { desc = "[G]it [B]ranch" })
 
-        vim.keymap.set('n', '<leader>gc', builtin.git_bcommits, { desc = '[G]it Buffer [C]ommits' })
+        vim.keymap.set("n", "<leader>gc", builtin.git_bcommits, { desc = "[G]it Buffer [C]ommits" })
 
-        vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = '[G]it [S]tatus' })
+        vim.keymap.set("n", "<leader>gs", builtin.git_status, { desc = "[G]it [S]tatus" })
 
-        vim.keymap.set('n', '<leader>gl', builtin.git_commits, { desc = '[G]it [L]og' })
+        vim.keymap.set("n", "<leader>gl", builtin.git_commits, { desc = "[G]it [L]og" })
 
-        vim.keymap.set('n', '<leader>tr', builtin.resume, { desc = '[T]elescope [R]esume' })
-    end
+        vim.keymap.set("n", "<leader>tr", builtin.resume, { desc = "[T]elescope [R]esume" })
+    end,
 }
