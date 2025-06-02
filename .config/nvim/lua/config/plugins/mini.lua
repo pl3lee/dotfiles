@@ -24,8 +24,8 @@ return {
                 MiniFiles.reveal_cwd()
             end, { desc = "Open Mini Files" })
 
-            local autopairs = require("mini.pairs")
-            autopairs.setup({})
+            -- local autopairs = require("mini.pairs")
+            -- autopairs.setup({})
 
             local surround = require("mini.surround")
             surround.setup({})

@@ -21,11 +21,19 @@ return {
                     },
                 },
                 path_display = {
-                    "smart",
+                    "filename_first",
+                    truncate = 5,
                 },
+                dynamic_preview_title = true,
             },
             pickers = {
                 find_files = {
+                    layout_strategy = "horizontal",
+                    layout_config = {
+                        height = 0.95,
+                        width = 0.95,
+                        preview_width = 0.3,
+                    },
                     find_command = {
                         "rg",
                         "--files",
