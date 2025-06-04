@@ -105,7 +105,16 @@ return {
         vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
         vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
         vim.keymap.set("n", "<leader>sf", builtin.find_files)
-        vim.keymap.set("n", "<leader>sg", live_multigrep)
+        vim.keymap.set("n", "<leader>sg", function()
+            live_multigrep({
+                layout_strategy = "horizontal",
+                layout_config = {
+                    height = 0.95,
+                    width = 0.95,
+                    preview_width = 0.4,
+                },
+            })
+        end)
         vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 
         vim.keymap.set("n", "<leader>/", function()
