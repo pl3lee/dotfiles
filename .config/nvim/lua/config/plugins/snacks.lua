@@ -9,6 +9,9 @@ return {
             scratch = {
                 enabled = true,
             },
+            gitbrowse = {
+                enabled = true,
+            },
         },
         keys = {
             {
@@ -24,6 +27,13 @@ return {
                     Snacks.scratch.select()
                 end,
                 desc = "Select Scratch Buffer",
+            },
+            {
+                "<leader><leader>gb",
+                function()
+                    Snacks.gitbrowse()
+                end,
+                desc = "Git browse",
             },
         },
     },
