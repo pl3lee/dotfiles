@@ -1,6 +1,7 @@
 vim.opt.clipboard = "unnamedplus" -- System clipboard
 
 vim.opt.smartcase = true -- Enable smart-case search: if search pattern contains uppercase, then search becomes case-sensitive
+vim.opt.ignorecase = true -- Ignore case in search
 
 vim.opt.number = true -- Show line numbers
 vim.opt.relativenumber = true -- Show relative line numbers
