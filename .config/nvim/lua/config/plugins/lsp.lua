@@ -28,7 +28,7 @@ return {
                     "ts_ls",
                     "tailwindcss",
                     "biome",
-                    "pyright",
+                    "basedpyright",
                     "marksman",
                 },
                 automatic_enable = {
@@ -38,7 +38,7 @@ return {
                         "ts_ls",
                         "tailwindcss",
                         "biome",
-                        "pyright",
+                        "basedpyright",
                         "marksman",
                     },
                 },
@@ -59,10 +59,10 @@ return {
             require("lspconfig").biome.setup({ capabilities = capabilities })
 
             -- python
-            require("lspconfig").pyright.setup({
+            require("lspconfig").basedpyright.setup({
                 capabilities = capabilities,
                 settings = {
-                    python = {
+                    basedpyright = {
                         venvPath = "./.venv/",
                         disableLanguageServices = false,
                         disableOrganizeImports = true,
@@ -77,6 +77,12 @@ return {
                                 "packages/coalition-persistent-data-manager/src",
                                 "rating_model",
                                 "service_clients",
+                            },
+                            inlayHints = {
+                                variableTypes = true,
+                                callArgumentNames = true,
+                                functionReturnTypes = true,
+                                genericTypes = true,
                             },
                         },
                     },
@@ -121,6 +127,11 @@ return {
                     if client:supports_method("textDocument/foldingRange") then
                         local win = vim.api.nvim_get_current_win()
                         vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                    end
+
+                    -- Enable inlay hints if client supports it
+                    if client:supports_method("textDocument/inlayHint") then
+                        vim.lsp.inlay_hint.enable(true)
                     end
                 end,
             })
