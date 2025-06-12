@@ -22,7 +22,7 @@ vim.g.pyindent_open_paren = 0 -- Disable extra indent level after open parenthes
 vim.opt.undofile = true -- Enable persistent undo
 vim.opt.inccommand = "split" -- Show substitution live
 vim.opt.cursorline = true -- Highlight cursor line
-vim.opt.scrolloff = 999 -- Keeps cursor centered when scrolling
+vim.opt.scrolloff = 10 -- Keeps cursor centered when scrolling
 
 -- remap j → gj, k → gk when no count is given:
 vim.keymap.set("n", "j", function()
