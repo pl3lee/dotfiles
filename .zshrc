@@ -18,6 +18,7 @@ export EDITOR="nvim"
 export VISUAL="nvim" 
 
 . "$HOME/.local/bin/env"
+export PATH=$PATH:$HOME/go/bin
 
 # Vi mode
 bindkey -v
@@ -45,3 +46,6 @@ function zle-line-init () {
 }
 zle -N zle-line-init
 
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
