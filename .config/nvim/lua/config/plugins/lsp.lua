@@ -11,17 +11,17 @@ return {
                     },
                 },
             },
-            {
-                "mason-org/mason.nvim",
-            },
-            {
-                "williamboman/mason-lspconfig.nvim",
-            },
+            "mason-org/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
         },
         config = function()
-            local capabilities = require("blink.cmp").get_lsp_capabilities()
-            require("mason").setup()
-            require("mason-lspconfig").setup({
+            local lspconfig = require("lspconfig")
+            local mason = require("mason")
+            local mason_lspconfig = require("mason-lspconfig")
+            local blink_capabilities = require("blink.cmp").get_lsp_capabilities()
+
+            mason.setup()
+            mason_lspconfig.setup({
                 ensure_installed = {
                     "lua_ls",
                     "gopls",
@@ -29,7 +29,7 @@ return {
                     "tailwindcss",
                     "biome",
                     "basedpyright",
-                    -- Used in conform
+                    -- Used in conform, no need setup
                     "ruff",
                     "marksman",
                 },
@@ -47,53 +47,79 @@ return {
                 },
             })
 
-            -- Define LSPs here
-            -- for manual installation instructions, do :help lspconfig-all
+            -- Override LSP keymaps to use telescope
+            vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions)
+            vim.keymap.set("n", "grr", function()
+                require("telescope.builtin").lsp_references({
+                    layout_strategy = "horizontal",
+                    layout_config = {
+                        height = 0.95,
+                        width = 0.95,
+                        preview_width = 0.4,
+                    },
+                })
+            end)
+            vim.keymap.set("n", "grt", require("telescope.builtin").lsp_type_definitions)
 
-            -- lua
-            require("lspconfig").lua_ls.setup({ capabilities = capabilities })
+            local on_attach = function(client, bufnr)
+                local bufopts = { buffer = bufnr, remap = false }
 
-            -- go
-            require("lspconfig").gopls.setup({ capabilities = capabilities })
+                -- Prefer LSP folding if client supports it
+                if client:supports_method("textDocument/foldingRange") then
+                    local win = vim.api.nvim_get_current_win()
+                    vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                end
 
-            -- webdev
-            require("lspconfig").ts_ls.setup({ capabilities = capabilities })
-            require("lspconfig").tailwindcss.setup({ capabilities = capabilities })
-            require("lspconfig").biome.setup({ capabilities = capabilities })
+                -- Enable inlay hints if client supports it
+                if client:supports_method("textDocument/inlayHint") then
+                    vim.lsp.inlay_hint.enable(true)
+                end
+            end
 
-            -- python
-            require("lspconfig").basedpyright.setup({
-                capabilities = capabilities,
-                settings = {
-                    basedpyright = {
-                        venvPath = "./.venv/",
-                        disableLanguageServices = false,
-                        disableOrganizeImports = true,
-                        disableTaggedHints = false,
-                        analysis = {
-                            autoSearchPaths = true,
-                            diagnosticMode = "workspace",
-                            useLibraryCodeForTypes = true,
-                            autoImportCompletions = true,
-                            typeCheckingMode = "standard",
-                            extraPaths = {
-                                "packages/coalition-persistent-data-manager/src",
-                                "rating_model",
-                                "service_clients",
-                            },
-                            inlayHints = {
-                                variableTypes = true,
-                                callArgumentNames = true,
-                                functionReturnTypes = true,
-                                genericTypes = true,
+            local servers = {
+                lua_ls = {},
+                gopls = {},
+                ts_ls = {},
+                tailwindcss = {},
+                biome = {},
+                marksman = {},
+                basedpyright = {
+                    settings = {
+                        basedpyright = {
+                            venvPath = "./.venv/",
+                            disableLanguageServices = false,
+                            disableOrganizeImports = true,
+                            disableTaggedHints = false,
+                            analysis = {
+                                autoSearchPaths = true,
+                                diagnosticMode = "workspace",
+                                useLibraryCodeForTypes = true,
+                                autoImportCompletions = true,
+                                typeCheckingMode = "standard",
+                                extraPaths = {
+                                    "packages/coalition-persistent-data-manager/src",
+                                    "rating_model",
+                                    "service_clients",
+                                },
+                                inlayHints = {
+                                    variableTypes = true,
+                                    callArgumentNames = true,
+                                    functionReturnTypes = true,
+                                    genericTypes = true,
+                                },
                             },
                         },
                     },
                 },
-            })
+            }
 
-            -- markdown
-            require("lspconfig").marksman.setup({ capabilities = capabilities })
+            for name, override in pairs(servers) do
+                local opts = vim.tbl_deep_extend("force", {
+                    on_attach = on_attach,
+                    capabilities = blink_capabilities,
+                }, override)
+                lspconfig[name].setup(opts)
+            end
 
             -- Diagnostics, virtual lines and virtual text
             vim.diagnostic.config({
@@ -101,42 +127,6 @@ return {
                 virtual_lines = { current_line = true },
                 underline = true,
                 update_in_insert = false,
-            })
-
-            vim.api.nvim_create_autocmd("LspAttach", {
-                group = vim.api.nvim_create_augroup("my.lsp", {}),
-                callback = function(args)
-                    local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-                    if not client then
-                        return
-                    end
-
-                    -- Override LSP keymaps to use telescope
-                    vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions)
-                    vim.keymap.set("n", "grr", function()
-                        require("telescope.builtin").lsp_references({
-                            layout_strategy = "horizontal",
-                            layout_config = {
-                                height = 0.95,
-                                width = 0.95,
-                                preview_width = 0.4,
-                            },
-                        })
-                    end)
-                    vim.keymap.set("n", "grt", require("telescope.builtin").lsp_type_definitions)
-
-                    -- Prefer LSP folding if client supports it
-                    if client:supports_method("textDocument/foldingRange") then
-                        local win = vim.api.nvim_get_current_win()
-                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
-                    end
-
-                    -- Enable inlay hints if client supports it
-                    if client:supports_method("textDocument/inlayHint") then
-                        vim.lsp.inlay_hint.enable(true)
-                    end
-                end,
             })
         end,
     },
@@ -179,7 +169,6 @@ return {
                     return
                 end
                 return {
-                    async = true,
                     timeout_ms = 5000,
                     lsp_format = "fallback",
                 }
