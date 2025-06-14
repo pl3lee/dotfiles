@@ -29,6 +29,8 @@ return {
                     "tailwindcss",
                     "biome",
                     "basedpyright",
+                    -- Used in conform
+                    "ruff",
                     "marksman",
                 },
                 automatic_enable = {
@@ -39,6 +41,7 @@ return {
                         "tailwindcss",
                         "biome",
                         "basedpyright",
+                        "ruff",
                         "marksman",
                     },
                 },
@@ -172,14 +175,11 @@ return {
             notify_on_error = false,
             log_level = vim.log.levels.DEBUG,
             format_on_save = function(bufnr)
-                if
-                    vim.g.disable_autoformat
-                    or vim.b[bufnr].disable_autoformat
-                    or vim.bo[bufnr].filetype == "python"
-                then
+                if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
                     return
                 end
                 return {
+                    async = true,
                     timeout_ms = 5000,
                     lsp_format = "fallback",
                 }
@@ -187,6 +187,7 @@ return {
             formatters_by_ft = {
                 lua = { "stylua" },
                 go = { "gofmt" },
+                python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
                 typescript = { "biome" },
                 typescriptreact = { "biome" },
                 javascript = { "biome" },
