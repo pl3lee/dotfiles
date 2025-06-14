@@ -70,9 +70,24 @@ return {
                     vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
                 end
 
-                -- Enable inlay hints if client supports it
+                -- Enable inlay hints only in normal mode
                 if client:supports_method("textDocument/inlayHint") then
+                    -- show hints initially
                     vim.lsp.inlay_hint.enable(true)
+
+                    -- disable hints in insert mode
+                    vim.api.nvim_create_autocmd("InsertEnter", {
+                        callback = function()
+                            vim.lsp.inlay_hint.enable(false)
+                        end,
+                    })
+                    -- re-enable on leaving insert
+                    vim.api.nvim_create_autocmd("InsertLeave", {
+                        buffer = bufnr,
+                        callback = function()
+                            vim.lsp.inlay_hint.enable(true)
+                        end,
+                    })
                 end
             end
 
