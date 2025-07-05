@@ -32,6 +32,7 @@ return {
                     -- Used in conform, no need setup
                     "ruff",
                     "marksman",
+                    "buf_ls",
                 },
                 automatic_enable = {
                     exclude = {
@@ -43,6 +44,7 @@ return {
                         "basedpyright",
                         "ruff",
                         "marksman",
+                        "buf_ls",
                     },
                 },
             })
@@ -98,6 +100,7 @@ return {
                 tailwindcss = {},
                 biome = {},
                 marksman = {},
+                buf_ls = {},
                 basedpyright = {
                     settings = {
                         basedpyright = {
