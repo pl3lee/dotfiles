@@ -3,6 +3,21 @@
   "theme": "opencode",
   "autoshare": false,
   "autoupdate": true,
+  "keybinds": {
+    "leader": "ctrl+x",
+    "help": "<leader>h",
+    "input_clear": "ctrl+c",
+    "input_paste": "ctrl+v",
+    "input_submit": "enter",
+    "input_newline": "shift+enter",
+    "history_previous": "up",
+    "history_next": "down",
+    "messages_half_page_up": "ctrl+u",
+    "messages_half_page_down": "ctrl+d",
+    "messages_previous": "ctrl+k",
+    "messages_next": "ctrl+j",
+    "app_exit": "<leader>q"
+  },
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
