@@ -158,7 +158,9 @@ return {
                 nerd_font_variant = "mono",
             },
             signature = { enabled = true },
+            accept = { auto_brackets = { enabled = false } },
             completion = {
+                keyword = { range = "full" },
                 documentation = {
                     auto_show = true,
                 },
