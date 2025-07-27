@@ -61,6 +61,16 @@ return {
                     },
                 })
             end)
+            vim.keymap.set("n", "gri", function()
+                require("telescope.builtin").lsp_implementations({
+                    layout_strategy = "horizontal",
+                    layout_config = {
+                        height = 0.95,
+                        width = 0.95,
+                        preview_width = 0.4,
+                    },
+                })
+            end)
             vim.keymap.set("n", "grt", require("telescope.builtin").lsp_type_definitions)
 
             local on_attach = function(client, bufnr)
