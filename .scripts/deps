@@ -7,4 +7,22 @@ brew install fd
 brew install tmux
 brew install node
 brew install go
+brew install delve
+brew install cmake
+brew install gh
+brew install golangci-lint
+brew install goose
+brew install sqlc
+brew install opencode
+brew install protobuf
+brew install python@3.13
+brew install 1password-cli
+brew install --cask displaylink
+brew install --cask postman
+brew install --cask raycast
+brew install --cask tableplus
+brew install --cask unnaturalscrollwheels
+brew install --cask visual-studio-code
+brew install --cask vivaldi
+brew install --cask yt-music
 brew install --cask ghostty
