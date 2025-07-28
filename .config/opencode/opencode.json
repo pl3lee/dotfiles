@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "instructions": ["docs/*.md", ".cursor/rules/*.md"],
   "theme": "opencode",
   "autoshare": false,
   "autoupdate": true,
