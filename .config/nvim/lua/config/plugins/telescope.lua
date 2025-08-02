@@ -5,6 +5,8 @@ return {
         "nvim-lua/plenary.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
         "folke/trouble.nvim",
+        "danielfalk/smart-open.nvim",
+        "kkharji/sqlite.lua",
     },
 
     config = function()
@@ -31,31 +33,41 @@ return {
                 dynamic_preview_title = true,
             },
             pickers = {
-                find_files = {
-                    layout_strategy = "horizontal",
+                -- find_files = {
+                --     layout_strategy = "horizontal",
+                --     layout_config = {
+                --         height = 0.95,
+                --         width = 0.95,
+                --         preview_width = 0.3,
+                --     },
+                --     find_command = {
+                --         "rg",
+                --         "--files",
+                --         "--sortr=modified",
+                --     },
+                -- },
+            },
+            extensions = {
+                -- fzf = {
+                --     fuzzy = true, -- false will only do exact matching
+                --     override_generic_sorter = true, -- override the generic sorter
+                --     override_file_sorter = true, -- override the file sorter
+                --     case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+                --     -- the default case_mode is "smart_case"
+                -- },
+                smart_open = {
+                    show_scores = true,
+                    match_algorithm = "fzf",
                     layout_config = {
                         height = 0.95,
                         width = 0.95,
                         preview_width = 0.3,
                     },
-                    find_command = {
-                        "rg",
-                        "--files",
-                        "--sortr=modified",
-                    },
-                },
-            },
-            extensions = {
-                fzf = {
-                    fuzzy = true, -- false will only do exact matching
-                    override_generic_sorter = true, -- override the generic sorter
-                    override_file_sorter = true, -- override the file sorter
-                    case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-                    -- the default case_mode is "smart_case"
-                },
+                }
             },
         })
         require("telescope").load_extension("fzf")
+        require("telescope").load_extension("smart_open")
 
         local live_multigrep = function(opts)
             opts = opts or {}
@@ -108,7 +120,17 @@ return {
 
         vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
         vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
-        vim.keymap.set("n", "<leader>sf", builtin.find_files)
+        vim.keymap.set("n", "<leader>sf", function()
+            require("telescope").extensions.smart_open.smart_open({
+                layout_config = {
+                    height = 0.95,
+                    width = 0.95,
+                    preview_width = 0.3,
+                },
+                cwd_only = true,
+                filename_first = true,
+            })
+        end)
         vim.keymap.set("n", "<leader>sg", function()
             live_multigrep({
                 layout_strategy = "horizontal",
