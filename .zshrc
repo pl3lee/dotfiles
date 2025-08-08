@@ -19,7 +19,7 @@ export VISUAL="nvim"
 
 . "$HOME/.local/bin/env"
 export PATH=$PATH:$HOME/go/bin
-
+source <(fzf --zsh)
 # Vi mode
 bindkey -v
 
