@@ -1,7 +1,7 @@
 ---
 description: Reviews code for quality and best practices
 mode: subagent
-model: github-copilot/gpt-5
+model: github-copilot/claude-sonnet-4
 tools:
   bash: true
   edit: false
@@ -33,9 +33,11 @@ Some key points to look out for:
 - Check if any new logging in the changes could expose sensitive information or enable log injection. Flag only cases where unsanitized **external** input is being logged; using trusted system-generated data (e.g., `user.id`) in logs is fine.
 - Ensure that any changes to error responses for public-facing APIs do not leak sensitive data or internal implementation details.
 - If a function that the user modified throws an error, recursively check that all code paths that depend on the modified function (directly or indirectly) can properly handle the error.
+- Ensure that all changes are tested using unit test and integration tests if needed.
 
 If the codebase name is "webserver", then follow the following guidelines as well:
 ## Codebase-Specific Checks
+- The default branch name is master, not main.
 - **Unit vs. Integration Tests**: Use unit tests **only** for code with no external dependencies (e.g., no database or API calls). If a test interacts with a database, external service, or other dependencies, it should be an integration test under `tests/integration/`.
 - **API Entrypoints**: Define any new API routes in the `src/entrypoints` package using a new Blueprint. Do **not** add new routes to the legacy `www/api` directory.
 - **Fixtures over Factories**: When writing tests, use fixtures to create test data instead of calling factories directly. (For example, avoid calling `UserFactory()` inside a test function; instead, define a fixture in `conftest.py` that uses the factory and use that fixture in the test.)
@@ -44,6 +46,7 @@ If the codebase name is "webserver", then follow the following guidelines as wel
 
 ## Architecture & Conventions
 - **`BadRequestError` Usage**: Ensure that `BadRequestError` (a Flask-specific exception) is used only within the `src/entrypoints` layer. Its error messages should be generic and sanitized, revealing no sensitive details to the end user.
+- Ignore the openapi/ directory since it is no longer used.
 - **No New Code in Legacy `www/`**: Do not add new code to the legacy top-level `www/` directory. All new features should reside under `src/`. (Note: paths under `src` that happen to include "`www`" in their name — for example, `src/entrypoints/www/...` — are part of `src` and are acceptable.)
 - **Layered Dependency Rule**: Follow the clean architecture dependency flow. Dependencies must point inward: `entrypoints` -> `service` -> `domain`. The inner **domain** layer should never depend on the outer layers. For example, `src/domain` must not import from `src/service`, `src/entrypoints`, or `src/adapters`.
 - **Domain Layer (`src/domain`)**: This is the core business logic layer. It should consist of pure business models and logic, completely independent of frameworks or external libraries. It must not import or depend on anything in `src/service`, `src/entrypoints`, or `src/adapters`.
