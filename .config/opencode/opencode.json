@@ -15,6 +15,21 @@
     "messages_copy": "<leader>y",
     "app_exit": "<leader>q"
   },
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "model": "github-copilot/gpt-5",
+    },
+    "plan": {
+      "mode": "primary",
+      "model": "github-copilot/gpt-5",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "patch": false
+      }
+    },
+  },
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
