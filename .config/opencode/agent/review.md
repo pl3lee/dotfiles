@@ -1,7 +1,7 @@
 ---
 description: Reviews code for quality and best practices
-mode: primary
-model: github-copilot/claude-sonnet-4
+mode: all
+model: openai/gpt-5
 tools:
   bash: true
   edit: false

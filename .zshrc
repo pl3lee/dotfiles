@@ -53,3 +53,4 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 alias python='python3'
 alias pip='pip3'
+export PATH="$HOME/.local/bin:$PATH"

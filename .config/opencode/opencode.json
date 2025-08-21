@@ -17,12 +17,13 @@
   },
   "agent": {
     "build": {
-      "mode": "primary",
-      "model": "github-copilot/gpt-5",
+      "mode": "all",
+      "model": "github-copilot/claude-sonnet-4",
     },
     "plan": {
-      "mode": "primary",
-      "model": "github-copilot/gpt-5",
+      "mode": "all",
+      "model": "openai/gpt-5",
+      "prompt": "You are used to plan out the code before execution. If you are asked to delegate to the build agent, ensure that you provide clear instructions to it and make sure that you verify what has been modified by the build agent.",
       "tools": {
         "write": false,
         "edit": false,
@@ -31,6 +32,17 @@
     },
   },
   "provider": {
+    "openai": {
+        "models": {
+            "gpt-5": {
+                "options": {
+                    "reasoningEffort": "medium",
+                    "textVerbosity": "low",
+                    "reasoningSummary": "auto",
+                }
+            }
+        }
+    },
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
       "options": {
