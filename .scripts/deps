@@ -17,10 +17,11 @@ brew install sst/tap/opencode
 brew install protobuf
 brew install python@3.13
 brew install 1password-cli
+brew install postgresql@17
 brew install --cask displaylink
 brew install --cask postman
 brew install --cask raycast
-brew install --cask tableplus
+brew install --cask beekeeper-studio
 brew install --cask unnaturalscrollwheels
 brew install --cask visual-studio-code
 brew install --cask vivaldi
