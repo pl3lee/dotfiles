@@ -28,6 +28,7 @@ return {
                     "ts_ls",
                     "tailwindcss",
                     "biome",
+                    "jsonls",
                     "basedpyright",
                     -- Used in conform, no need setup
                     "ruff",
@@ -41,6 +42,7 @@ return {
                         "ts_ls",
                         "tailwindcss",
                         "biome",
+                        "jsonls",
                         "basedpyright",
                         "ruff",
                         "marksman",
@@ -103,6 +105,7 @@ return {
                 end
             end
 
+
             local servers = {
                 lua_ls = {},
                 gopls = {},
@@ -111,6 +114,19 @@ return {
                 biome = {},
                 marksman = {},
                 buf_ls = {},
+                jsonls = {
+                    -- lazy-load schemastore when needed
+                    on_new_config = function(new_config)
+                        new_config.settings.json.schemas = new_config.settings.json.schemas or {}
+                        vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
+                    end,
+                    settings = {
+                        json = {
+                            format = { enable = true },
+                            validate = { enable = true },
+                        },
+                    },
+                },
                 basedpyright = {
                     settings = {
                         basedpyright = {

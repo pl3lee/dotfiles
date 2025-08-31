@@ -1,71 +1,74 @@
 {
-  "$schema": "https://opencode.ai/config.json",
-  "instructions": ["docs/*.md", ".cursor/rules/*.md"],
-  "permission": {
-    "edit": "allow",
-    "bash": "allow",
-    "webfetch": "allow"
-  },
-  "theme": "opencode",
-  "autoshare": false,
-  "autoupdate": true,
-  "keybinds": {
-    "leader": "ctrl+x",
-    "input_clear": "ctrl+c",
-    "input_paste": "ctrl+v",
-    "input_submit": "enter",
-    "input_newline": "<leader>enter",
-    "messages_half_page_up": "ctrl+u",
-    "messages_half_page_down": "ctrl+d",
-    "messages_copy": "<leader>y",
-    "app_exit": "<leader>q"
-  },
-  "agent": {
-    "build": {
-      "mode": "all",
-      "model": "openai/gpt-5",
+    "$schema": "https://opencode.ai/config.json",
+    "instructions": [
+        "docs/*.md",
+        ".cursor/rules/*.md"
+    ],
+    "permission": {
+        "edit": "allow",
+        "bash": {
+            "git commit": "deny",
+            "git push": "deny",
+            "*": "allow"
+        },
+        "webfetch": "allow"
     },
-    "plan": {
-      "mode": "all",
-      "model": "openai/gpt-5",
-      "prompt": "You are used to plan out the code before execution. If you are asked to delegate to the build agent, ensure that you provide clear instructions to it and make sure that you verify what has been modified by the build agent.",
-      "tools": {
-        "write": false,
-        "edit": false,
-        "patch": false
-      }
+    "autoshare": false,
+    "autoupdate": true,
+    "keybinds": {
+        "leader": "ctrl+x",
+        "input_clear": "ctrl+c",
+        "input_paste": "ctrl+v",
+        "input_submit": "enter",
+        "input_newline": "<leader>enter",
+        "messages_half_page_up": "ctrl+u",
+        "messages_half_page_down": "ctrl+d",
+        "messages_copy": "<leader>y",
+        "app_exit": "<leader>q"
     },
-  },
-  "provider": {
-    "openai": {
-        "models": {
-            "gpt-5": {
-                "options": {
-                    "reasoningEffort": "medium",
-                    "textVerbosity": "low",
-                    "reasoningSummary": "auto",
-                }
-            }
+    "agent": {
+        "build": {
+            "mode": "all",
+            "model": "openai/gpt-5-mini"
         }
     },
-    "ollama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "options": {
-        "baseURL": "https://reggie2.it.coalitioninc.com/api"
-      },
-      "models": {
-        "gpt-4.1": {},
-        "o3": {},
-        "o4-mini": {},
-        "o4-mini-high": {},
-        "gemini-2.5-pro-preview-03-25": {},
-        "claude-sonnet-4-20250514": {},
-        "claude-opus-4-20250514": {},
-        "claude-3-7-sonnet-20250219": {},
-        "claude-3-7-sonnet-20250219-thinking-high": {},
-        "claude-opus-4-1-20250805": {},
-        "gpt-5": {}
-      }
+    "provider": {
+        "openai": {
+            "models": {
+                "gpt-5-mini": {
+                    "options": {
+                        "reasoningEffort": "medium",
+                        "textVerbosity": "low",
+                        "reasoningSummary": "auto"
+                    }
+                },
+                "gpt-5": {
+                    "options": {
+                        "reasoningEffort": "low",
+                        "textVerbosity": "low",
+                        "reasoningSummary": "auto"
+                    }
+                }
+            }
+        },
+        "ollama": {
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "baseURL": "https://reggie2.it.coalitioninc.com/api"
+            },
+            "models": {
+                "gpt-4.1": {},
+                "o3": {},
+                "o4-mini": {},
+                "o4-mini-high": {},
+                "gemini-2.5-pro-preview-03-25": {},
+                "claude-sonnet-4-20250514": {},
+                "claude-opus-4-20250514": {},
+                "claude-3-7-sonnet-20250219": {},
+                "claude-3-7-sonnet-20250219-thinking-high": {},
+                "claude-opus-4-1-20250805": {},
+                "gpt-5": {}
+            }
+        }
     }
-  }
 }
