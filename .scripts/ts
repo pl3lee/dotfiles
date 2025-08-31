@@ -40,7 +40,7 @@ create_session() {
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find "$HOME" -mindepth 1 -maxdepth 2 -type d 2>/dev/null | fzf --height=40% --layout=reverse --prompt="Pick dir> ")
+    selected=$(find "$HOME" -mindepth 1 -maxdepth 2 -type d -path "$HOME/.cache" -prune -o -type d -print 2>/dev/null | fzf --height=40% --layout=reverse --prompt="Pick dir> ")
 fi
 
 if [[ -z $selected ]]; then
