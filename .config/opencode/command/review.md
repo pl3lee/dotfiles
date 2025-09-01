@@ -1,5 +1,6 @@
 ---
 description: Reviews the last commit made and determines if the plan was executed completely, and documents any drift that occurred during implementation. Provide a plan file in the arguments for the review to analyze. It is strongly advised to run this command within the session of a plan execution, after running commit.
+model: openai/gpt-5-mini
 ---
 
 # Review Plan

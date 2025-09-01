@@ -70,5 +70,15 @@
                 "gpt-5": {}
             }
         }
+    },
+    "mcp": {
+        "GitHub": {
+            "type": "remote",
+            "url": "https://api.githubcopilot.com/mcp/",
+            "enabled": true,
+            "headers": {
+                "Authorization": "Bearer ${GITHUB_TOKEN}"
+            }
+        }
     }
 }

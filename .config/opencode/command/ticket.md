@@ -1,5 +1,6 @@
 ---
 description: Creates a structured ticket for bugs, features, or technical debt based on user input. Extracts keywords and patterns for research phase.
+model: openai/gpt-5-mini
 ---
 
 # Create Ticket

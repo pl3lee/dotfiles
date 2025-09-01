@@ -1,5 +1,6 @@
 ---
 description: Commits the local changes in atomic commits. This command is best run after completing an execute run successfully, and preparing for plan review.
+model: openai/gpt-5-mini
 ---
 
 # Commit Changes

@@ -1,5 +1,6 @@
 ---
 description: Execute a specific implementation plan. Provide a plan file as the argument to this command. It's very important this command runs in a new session.
+model: openai/gpt-5
 ---
 
 # Implement Plan
