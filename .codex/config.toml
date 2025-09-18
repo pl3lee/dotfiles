@@ -1,0 +1,15 @@
+model = "gpt-5"
+model_reasoning_effort = "high"
+approval_policy = "never"
+
+[projects."/Users/billy.lee/workspace/webserver"]
+trust_level = "trusted"
+
+[projects."/Users/billy.lee/workspace/cyber-orchestration"]
+trust_level = "trusted"
+
+[projects."/Users/billy.lee/workspace/cyber-lifecycle"]
+trust_level = "trusted"
+
+[tools]
+web_search = true

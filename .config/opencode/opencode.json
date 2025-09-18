@@ -29,7 +29,7 @@
     "agent": {
         "build": {
             "mode": "all",
-            "model": "openai/gpt-5-mini"
+            "model": "github-copilot/claude-sonnet-4"
         }
     },
     "provider": {
@@ -79,6 +79,21 @@
             "headers": {
                 "Authorization": "Bearer {env:GITHUB_TOKEN}"
             }
+        },
+        "LaunchDarkly": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "npx",
+                "-y",
+                "--package",
+                "@launchdarkly/mcp-server",
+                "--",
+                "mcp",
+                "start",
+                "--api-key",
+                "{env:LD_TOKEN}"
+            ]
         }
     }
 }
