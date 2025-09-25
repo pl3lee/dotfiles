@@ -162,7 +162,10 @@ return {
                     on_attach = on_attach,
                     capabilities = blink_capabilities,
                 }, override)
-                lspconfig[name].setup(opts)
+                vim.lsp.config(name, opts)
+            end
+            for name in pairs(servers) do
+                vim.lsp.enable(name)
             end
 
             -- Diagnostics, virtual lines and virtual text
