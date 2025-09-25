@@ -15,7 +15,6 @@ return {
             "williamboman/mason-lspconfig.nvim",
         },
         config = function()
-            local lspconfig = require("lspconfig")
             local mason = require("mason")
             local mason_lspconfig = require("mason-lspconfig")
             local blink_capabilities = require("blink.cmp").get_lsp_capabilities()
