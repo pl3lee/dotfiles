@@ -28,7 +28,8 @@ return {
                     "tailwindcss",
                     "biome",
                     "jsonls",
-                    "basedpyright",
+                    -- "basedpyright",
+                    "ty",
                     -- Used in conform, no need setup
                     "ruff",
                     "marksman",
@@ -43,6 +44,7 @@ return {
                         "biome",
                         "jsonls",
                         "basedpyright",
+                        "ty",
                         "ruff",
                         "marksman",
                         "buf_ls",
@@ -126,34 +128,49 @@ return {
                         },
                     },
                 },
-                basedpyright = {
-                    settings = {
-                        basedpyright = {
-                            venvPath = "./.venv/",
-                            disableLanguageServices = false,
-                            disableOrganizeImports = true,
-                            disableTaggedHints = false,
-                            analysis = {
-                                autoSearchPaths = true,
-                                diagnosticMode = "openFilesOnly",
-                                useLibraryCodeForTypes = true,
-                                autoImportCompletions = true,
-                                typeCheckingMode = "standard",
-                                extraPaths = {
-                                    "packages/coalition-persistent-data-manager/src",
-                                    "rating_model",
-                                    "service_clients",
-                                },
-                                inlayHints = {
-                                    variableTypes = true,
-                                    callArgumentNames = true,
-                                    functionReturnTypes = true,
-                                    genericTypes = true,
-                                },
-                            },
-                        },
+                ty = {
+                    diagnosticMode = 'workspace',
+                    experimental = {
+                        autoImport = true,
+                        rename = true,
                     },
+                    environment = {
+                        extraPaths = {
+                            "packages/coalition-persistent-data-manager/src",
+                            "rating_model",
+                            "service_clients",
+                        },
+                    }
+
                 },
+                -- basedpyright = {
+                --     settings = {
+                --         basedpyright = {
+                --             venvPath = "./.venv/",
+                --             disableLanguageServices = false,
+                --             disableOrganizeImports = true,
+                --             disableTaggedHints = false,
+                --             analysis = {
+                --                 autoSearchPaths = true,
+                --                 diagnosticMode = "openFilesOnly",
+                --                 useLibraryCodeForTypes = true,
+                --                 autoImportCompletions = true,
+                --                 typeCheckingMode = "standard",
+                --                 extraPaths = {
+                --                     "packages/coalition-persistent-data-manager/src",
+                --                     "rating_model",
+                --                     "service_clients",
+                --                 },
+                --                 inlayHints = {
+                --                     variableTypes = true,
+                --                     callArgumentNames = true,
+                --                     functionReturnTypes = true,
+                --                     genericTypes = true,
+                --                 },
+                --             },
+                --         },
+                --     },
+                -- },
             }
 
             for name, override in pairs(servers) do
