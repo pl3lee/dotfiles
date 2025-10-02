@@ -65,9 +65,13 @@ return {
                     end
 
                     -- Additional filtering
-                    if pieces[2] then
-                        table.insert(args, "-g")
-                        table.insert(args, pieces[2])
+                    if #pieces > 1 then
+                        for i = 2, #pieces do
+                            if pieces[i] then
+                                table.insert(args, "-g")
+                                table.insert(args, pieces[i])
+                            end
+                        end
                     end
 
                     return (function()

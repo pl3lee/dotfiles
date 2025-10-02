@@ -28,8 +28,9 @@ return {
                     "tailwindcss",
                     "biome",
                     "jsonls",
-                    -- "basedpyright",
-                    "ty",
+                    "basedpyright",
+                    -- "ty",
+
                     -- Used in conform, no need setup
                     "ruff",
                     "marksman",
@@ -128,49 +129,46 @@ return {
                         },
                     },
                 },
-                ty = {
-                    diagnosticMode = 'workspace',
-                    experimental = {
-                        autoImport = true,
-                        rename = true,
-                    },
-                    environment = {
-                        extraPaths = {
-                            "packages/coalition-persistent-data-manager/src",
-                            "rating_model",
-                            "service_clients",
-                        },
-                    }
-
-                },
-                -- basedpyright = {
+                -- ty = {
                 --     settings = {
-                --         basedpyright = {
-                --             venvPath = "./.venv/",
-                --             disableLanguageServices = false,
-                --             disableOrganizeImports = true,
-                --             disableTaggedHints = false,
-                --             analysis = {
-                --                 autoSearchPaths = true,
-                --                 diagnosticMode = "openFilesOnly",
-                --                 useLibraryCodeForTypes = true,
-                --                 autoImportCompletions = true,
-                --                 typeCheckingMode = "standard",
-                --                 extraPaths = {
-                --                     "packages/coalition-persistent-data-manager/src",
-                --                     "rating_model",
-                --                     "service_clients",
-                --                 },
-                --                 inlayHints = {
-                --                     variableTypes = true,
-                --                     callArgumentNames = true,
-                --                     functionReturnTypes = true,
-                --                     genericTypes = true,
-                --                 },
+                --         ty = {
+                --             diagnosticMode = 'workspace',
+                --             experimental = {
+                --                 autoImport = true,
+                --                 rename = true,
                 --             },
-                --         },
-                --     },
+                --         }
+                --     }
+                --
                 -- },
+                basedpyright = {
+                    settings = {
+                        basedpyright = {
+                            venvPath = "./.venv/",
+                            disableLanguageServices = false,
+                            disableOrganizeImports = true,
+                            disableTaggedHints = false,
+                            analysis = {
+                                fileEnumerationTimeout = 30,
+                                autoFormatStrings = true,
+                                autoSearchPaths = true,
+                                diagnosticMode = "openFilesOnly",
+                                useLibraryCodeForTypes = true,
+                                autoImportCompletions = true,
+                                typeCheckingMode = "standard",
+                                extraPaths = {
+                                    "packages/coalition-persistent-data-manager/src",
+                                },
+                                inlayHints = {
+                                    variableTypes = true,
+                                    callArgumentNames = true,
+                                    functionReturnTypes = true,
+                                    genericTypes = true,
+                                },
+                            },
+                        },
+                    },
+                },
             }
 
             for name, override in pairs(servers) do
