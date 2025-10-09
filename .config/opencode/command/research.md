@@ -1,6 +1,6 @@
 ---
 description: Research a ticket or provide a prompt for ad-hoc research. It is best to run this command in a new session.
-model: openai/gpt-5
+model: openai/gpt-5-codex
 ---
 
 # Research Codebase

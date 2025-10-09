@@ -1,7 +1,7 @@
 ---
 description: Analyzes codebase implementation details. Call the codebase-analyzer agent when you need to find detailed information about specific components.
 mode: subagent
-model: openai/gpt-5-mini
+model: openai/gpt-5-codex
 temperature: 0.1
 tools:
   read: true
