@@ -24,9 +24,6 @@ return {
                 MiniFiles.reveal_cwd()
             end, { desc = "Open Mini Files" })
 
-            -- local autopairs = require("mini.pairs")
-            -- autopairs.setup({})
-
             local surround = require("mini.surround")
             surround.setup({})
 
@@ -35,6 +32,15 @@ return {
 
             local jump2d = require("mini.jump2d")
             jump2d.setup({})
+
+            local notify = require("mini.notify")
+            notify.setup({})
+
+            local bracketed = require("mini.bracketed")
+            bracketed.setup({})
+
+            local ai = require("mini.ai")
+            ai.setup({})
         end,
     },
 }

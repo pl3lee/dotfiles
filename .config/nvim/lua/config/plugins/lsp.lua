@@ -149,7 +149,7 @@ return {
                             disableOrganizeImports = true,
                             disableTaggedHints = false,
                             analysis = {
-                                fileEnumerationTimeout = 30,
+                                fileEnumerationTimeout = 300,
                                 autoFormatStrings = true,
                                 autoSearchPaths = true,
                                 diagnosticMode = "openFilesOnly",
