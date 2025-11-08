@@ -110,7 +110,22 @@ return {
 
             local servers = {
                 lua_ls = {},
-                gopls = {},
+                gopls = {
+                    settings = {
+                        gopls = {
+                            hints = {
+                                assignVariableTypes = true,
+                                compositeLiteralFields = true,
+                                compositeLiteralTypes = true,
+                                constantValues = true,
+                                functionTypeParameters = true,
+                                ignoredError = true,
+                                parameterNames = true,
+                                rangeVariableTypes = true,
+                            }
+                        },
+                    }
+                },
                 ts_ls = {},
                 tailwindcss = {},
                 biome = {},
