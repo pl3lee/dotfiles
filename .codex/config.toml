@@ -11,5 +11,8 @@ trust_level = "trusted"
 [projects."/Users/billy.lee/workspace/cyber-lifecycle"]
 trust_level = "trusted"
 
-[tools]
-web_search = true
+[features]
+web_search_request = true
+
+[notice]
+hide_full_access_warning = true
