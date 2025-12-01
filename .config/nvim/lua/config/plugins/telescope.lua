@@ -102,6 +102,7 @@ return {
         end
 
         vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+        vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "[S]earch [B]uffers" })
         vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
         vim.keymap.set("n", "<leader>sf", function()
             require("telescope").extensions.smart_open.smart_open({
