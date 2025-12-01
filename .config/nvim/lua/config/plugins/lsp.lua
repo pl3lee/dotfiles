@@ -80,6 +80,15 @@ return {
             local on_attach = function(client, bufnr)
                 local bufopts = { buffer = bufnr, remap = false }
 
+                -- Disable LSP for diffview buffers (they use diffview:// scheme)
+                local bufname = vim.api.nvim_buf_get_name(bufnr)
+                if bufname:match("^diffview://") then
+                    vim.schedule(function()
+                        vim.lsp.buf_detach_client(bufnr, client.id)
+                    end)
+                    return
+                end
+
                 -- Prefer LSP folding if client supports it
                 if client:supports_method("textDocument/foldingRange") then
                     local win = vim.api.nvim_get_current_win()
