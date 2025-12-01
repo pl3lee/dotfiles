@@ -120,39 +120,42 @@ end, {})
 
 -- Auto-close old hidden buffers when there are too many
 local max_buffers = 15
-vim.api.nvim_create_autocmd("BufAdd", {
+vim.api.nvim_create_autocmd("BufEnter", {
     group = vim.api.nvim_create_augroup("auto-close-buffers", { clear = true }),
     callback = function()
-        local bufs = vim.tbl_filter(function(b)
-            return vim.bo[b].buflisted and vim.api.nvim_buf_is_valid(b)
-        end, vim.api.nvim_list_bufs())
+        vim.schedule(function()
+            local current_buf = vim.api.nvim_get_current_buf()
+            local bufs = vim.tbl_filter(function(b)
+                return vim.bo[b].buflisted and vim.api.nvim_buf_is_valid(b)
+            end, vim.api.nvim_list_bufs())
 
-        if #bufs <= max_buffers then
-            return
-        end
-
-        -- Sort by last used (oldest first)
-        table.sort(bufs, function(a, b)
-            return vim.fn.getbufinfo(a)[1].lastused < vim.fn.getbufinfo(b)[1].lastused
-        end)
-
-        -- Get buffers shown in windows
-        local visible = {}
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-            visible[vim.api.nvim_win_get_buf(win)] = true
-        end
-
-        -- Close oldest hidden, unmodified buffers
-        for _, buf in ipairs(bufs) do
             if #bufs <= max_buffers then
-                break
+                return
             end
-            if not visible[buf] and not vim.bo[buf].modified then
-                vim.api.nvim_buf_delete(buf, {})
-                bufs = vim.tbl_filter(function(b)
-                    return b ~= buf
-                end, bufs)
+
+            -- Sort by last used (oldest first)
+            table.sort(bufs, function(a, b)
+                return vim.fn.getbufinfo(a)[1].lastused < vim.fn.getbufinfo(b)[1].lastused
+            end)
+
+            -- Get buffers shown in windows
+            local visible = {}
+            for _, win in ipairs(vim.api.nvim_list_wins()) do
+                visible[vim.api.nvim_win_get_buf(win)] = true
             end
-        end
+
+            -- Close oldest hidden, unmodified buffers (never close current)
+            for _, buf in ipairs(bufs) do
+                if #bufs <= max_buffers then
+                    break
+                end
+                if buf ~= current_buf and not visible[buf] and not vim.bo[buf].modified then
+                    vim.api.nvim_buf_delete(buf, {})
+                    bufs = vim.tbl_filter(function(b)
+                        return b ~= buf
+                    end, bufs)
+                end
+            end
+        end)
     end,
 })
