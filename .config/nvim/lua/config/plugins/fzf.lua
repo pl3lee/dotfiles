@@ -18,6 +18,8 @@ return {
             keymap = {
                 fzf = {
                     ["ctrl-q"] = "select-all+accept", -- send all to quickfix
+                    ["ctrl-n"] = "down",
+                    ["ctrl-p"] = "up",
                 },
             },
             files = {
