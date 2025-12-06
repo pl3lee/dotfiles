@@ -1,9 +1,5 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "instructions": [
-        "docs/*.md",
-        ".cursor/rules/*.md"
-    ],
     "permission": {
         "edit": "allow",
         "bash": {
@@ -17,59 +13,64 @@
     "autoupdate": true,
     "keybinds": {
         "leader": "ctrl+x",
-        "input_clear": "ctrl+c",
-        "input_paste": "ctrl+v",
-        "input_submit": "enter",
-        "input_newline": "<leader>enter",
+        "app_exit": "<leader>q",
+        "editor_open": "none",
+        "theme_list": "none",
+        "sidebar_toggle": "<leader>b",
+        "username_toggle": "none",
+        "status_view": "<leader>s",
+        "session_export": "none",
+        "session_new": "none",
+        "session_list": "none",
+        "session_timeline": "none",
+        "session_share": "none",
+        "session_unshare": "none",
+        "session_interrupt": "escape",
+        "session_compact": "<leader>c",
+        "session_child_cycle": "<leader>+right",
+        "session_child_cycle_reverse": "<leader>+left",
+        "messages_page_up": "pageup",
+        "messages_page_down": "pagedown",
         "messages_half_page_up": "ctrl+u",
         "messages_half_page_down": "ctrl+d",
+        "messages_first": "none",
+        "messages_last": "none",
         "messages_copy": "<leader>y",
-        "app_exit": "<leader>q"
-    },
-    "agent": {
-        "build": {
-            "mode": "all",
-            "model": "github-copilot/claude-sonnet-4"
-        }
+        "messages_undo": "<leader>u",
+        "messages_redo": "<leader>r",
+        "messages_last_user": "none",
+        "messages_toggle_conceal": "<leader>h",
+        "model_list": "<leader>m",
+        "model_cycle_recent": "f2",
+        "model_cycle_recent_reverse": "shift+f2",
+        "command_list": "ctrl+p",
+        "agent_list": "<leader>a",
+        "agent_cycle": "tab",
+        "agent_cycle_reverse": "shift+tab",
+        "input_clear": "ctrl+c",
+        "input_forward_delete": "ctrl+d",
+        "input_paste": "ctrl+v",
+        "input_submit": "enter",
+        "input_newline": "shift+enter,ctrl+j",
+        "history_previous": "up",
+        "history_next": "down"
     },
     "provider": {
         "openai": {
             "models": {
-                "gpt-5-mini": {
+                "gpt-5.1-codex-max": {
                     "options": {
-                        "reasoningEffort": "medium",
-                        "textVerbosity": "low",
-                        "reasoningSummary": "auto"
-                    }
-                },
-                "gpt-5": {
-                    "options": {
-                        "reasoningEffort": "low",
-                        "textVerbosity": "low",
-                        "reasoningSummary": "auto"
+                        "store": false,
+                        "reasoningEffort": "high",
+                        "textVerbosity": "medium",
+                        "reasoningSummary": "auto",
+                        "include": [
+                            "reasoning.encrypted_content"
+                        ]
                     }
                 }
             }
         },
-        "ollama": {
-            "npm": "@ai-sdk/openai-compatible",
-            "options": {
-                "baseURL": "https://reggie2.it.coalitioninc.com/api"
-            },
-            "models": {
-                "gpt-4.1": {},
-                "o3": {},
-                "o4-mini": {},
-                "o4-mini-high": {},
-                "gemini-2.5-pro-preview-03-25": {},
-                "claude-sonnet-4-20250514": {},
-                "claude-opus-4-20250514": {},
-                "claude-3-7-sonnet-20250219": {},
-                "claude-3-7-sonnet-20250219-thinking-high": {},
-                "claude-opus-4-1-20250805": {},
-                "gpt-5": {}
-            }
-        }
     },
     "mcp": {
         "GitHub": {
