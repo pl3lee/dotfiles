@@ -53,30 +53,6 @@ return {
                 },
             })
 
-            -- Override LSP keymaps to use telescope
-            vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions)
-            vim.keymap.set("n", "grr", function()
-                require("telescope.builtin").lsp_references({
-                    layout_strategy = "horizontal",
-                    layout_config = {
-                        height = 0.95,
-                        width = 0.95,
-                        preview_width = 0.4,
-                    },
-                })
-            end)
-            vim.keymap.set("n", "gri", function()
-                require("telescope.builtin").lsp_implementations({
-                    layout_strategy = "horizontal",
-                    layout_config = {
-                        height = 0.95,
-                        width = 0.95,
-                        preview_width = 0.4,
-                    },
-                })
-            end)
-            vim.keymap.set("n", "grt", require("telescope.builtin").lsp_type_definitions)
-
             local on_attach = function(client, bufnr)
                 local bufopts = { buffer = bufnr, remap = false }
 
