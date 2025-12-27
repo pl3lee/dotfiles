@@ -48,7 +48,6 @@
         "agent_cycle": "tab",
         "agent_cycle_reverse": "shift+tab",
         "input_clear": "ctrl+c",
-        "input_forward_delete": "ctrl+d",
         "input_paste": "ctrl+v",
         "input_submit": "enter",
         "input_newline": "shift+enter,ctrl+j",
@@ -71,6 +70,18 @@
                 }
             }
         },
+        "github-copilot": {
+            "models": {
+                "claude-opus-4.5": {
+                    "options": {
+                        "store": false,
+                        "include": [
+                            "reasoning.encrypted_content"
+                        ]
+                    }
+                }
+            }
+        }
     },
     "mcp": {
         "GitHub": {
