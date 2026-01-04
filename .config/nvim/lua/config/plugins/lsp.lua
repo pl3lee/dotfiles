@@ -245,5 +245,15 @@ return {
                 javascriptreact = { "biome" },
             },
         },
+        init = function()
+            vim.api.nvim_create_user_command("FormatToggle", function()
+                vim.g.disable_autoformat = not vim.g.disable_autoformat
+                if vim.g.disable_autoformat then
+                    vim.notify("Autoformat on save disabled globally", vim.log.levels.INFO)
+                else
+                    vim.notify("Autoformat on save enabled globally", vim.log.levels.INFO)
+                end
+            end, { desc = "Toggle autoformat on save globally" })
+        end,
     },
 }
