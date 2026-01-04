@@ -19,7 +19,6 @@ brew install python@3.13
 brew install 1password-cli
 brew install postgresql@17
 brew install --cask displaylink
-brew install --cask postman
 brew install --cask raycast
 brew install --cask beekeeper-studio
 brew install --cask unnaturalscrollwheels
