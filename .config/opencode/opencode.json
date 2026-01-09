@@ -7,7 +7,20 @@
             "git push": "deny",
             "*": "allow"
         },
-        "webfetch": "allow"
+        "webfetch": "allow",
+        "skill": "allow",
+        "question": "allow"
+    },
+    "agent": {
+        "plan": {
+            "mode": "primary",
+            "permission": {
+                "edit": {
+                    "*": "deny",
+                    "plans/*": "allow"
+                }
+            }
+        },
     },
     "autoshare": false,
     "autoupdate": true,
@@ -83,29 +96,4 @@
             }
         }
     },
-    "mcp": {
-        "GitHub": {
-            "type": "remote",
-            "url": "https://api.githubcopilot.com/mcp/",
-            "enabled": true,
-            "headers": {
-                "Authorization": "Bearer {env:GITHUB_TOKEN}"
-            }
-        },
-        "LaunchDarkly": {
-            "type": "local",
-            "enabled": true,
-            "command": [
-                "npx",
-                "-y",
-                "--package",
-                "@launchdarkly/mcp-server",
-                "--",
-                "mcp",
-                "start",
-                "--api-key",
-                "{env:LD_TOKEN}"
-            ]
-        }
-    }
 }
