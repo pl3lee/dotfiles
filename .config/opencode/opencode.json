@@ -73,14 +73,13 @@
                 "gpt-5.1-codex-max": {
                     "options": {
                         "store": false,
-                        "reasoningEffort": "high",
-                        "textVerbosity": "medium",
-                        "reasoningSummary": "auto",
-                        "include": [
-                            "reasoning.encrypted_content"
-                        ]
                     }
-                }
+                },
+                "gpt-5.2-codex": {
+                    "options": {
+                        "store": false,
+                    }
+                },
             }
         },
         "github-copilot": {
