@@ -102,7 +102,11 @@
             },
             "models": {
                 "us.anthropic.claude-opus-4-5-20251101-v1:0": {
-                    "name": "Claude Opus 4.5"
+                    "name": "Claude Opus 4.5",
+                    "limit": {
+                        "context": 200000,
+                        "output": 64000
+                    }
                 }
             }
         }
