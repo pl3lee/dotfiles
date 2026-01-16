@@ -93,6 +93,18 @@
                     }
                 }
             }
+        },
+        "litellm": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "LiteLLM",
+            "options": {
+                "baseURL": "{env:LITELLM_BASE_URL}/v1"
+            },
+            "models": {
+                "us.anthropic.claude-opus-4-5-20251101-v1:0": {
+                    "name": "Claude Opus 4.5"
+                }
+            }
         }
     },
 }
