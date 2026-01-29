@@ -25,7 +25,13 @@ return {
             },
             files = {
                 git_icons = true,
+                hidden = true,
                 cwd_prompt = true,
+            },
+            grep = {
+                hidden = true,
+                no_ignore = false,
+                rg_opts = "--glob '!.git/**'",
             },
             oldfiles = {
                 cwd_only = true,
