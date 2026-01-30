@@ -99,7 +99,6 @@
             "name": "LiteLLM",
             "options": {
                 "baseURL": "{env:LITELLM_BASE_URL}/v1",
-                "setCacheKey": true
             },
             "models": {
                 "us.anthropic.claude-opus-4-5-20251101-v1:0": {
