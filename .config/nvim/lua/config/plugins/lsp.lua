@@ -28,8 +28,8 @@ return {
                     "tailwindcss",
                     "biome",
                     "jsonls",
-                    -- "basedpyright",
-                    "ty",
+                    "basedpyright",
+                    -- "ty",
 
                     -- Used in conform, no need setup
                     "ruff",
@@ -129,45 +129,45 @@ return {
                         },
                     },
                 },
-                ty = {
-                    settings = {
-                        ty = {
-                            diagnosticMode = 'workspace',
-                            experimental = {
-                                autoImport = true,
-                                rename = true,
-                            },
-                        }
-                    }
-
-                },
-                -- basedpyright = {
+                -- ty = {
                 --     settings = {
-                --         basedpyright = {
-                --             disableLanguageServices = false,
-                --             disableOrganizeImports = true,
-                --             disableTaggedHints = false,
-                --             analysis = {
-                --                 fileEnumerationTimeout = 300,
-                --                 autoFormatStrings = true,
-                --                 autoSearchPaths = true,
-                --                 diagnosticMode = "openFilesOnly",
-                --                 useLibraryCodeForTypes = true,
-                --                 autoImportCompletions = true,
-                --                 typeCheckingMode = "standard",
-                --                 extraPaths = {
-                --                     "packages/coalition-persistent-data-manager/src",
-                --                 },
-                --                 inlayHints = {
-                --                     variableTypes = true,
-                --                     callArgumentNames = true,
-                --                     functionReturnTypes = true,
-                --                     genericTypes = true,
-                --                 },
+                --         ty = {
+                --             diagnosticMode = 'workspace',
+                --             experimental = {
+                --                 autoImport = true,
+                --                 rename = true,
                 --             },
-                --         },
-                --     },
+                --         }
+                --     }
+                --
                 -- },
+                basedpyright = {
+                    settings = {
+                        basedpyright = {
+                            disableLanguageServices = false,
+                            disableOrganizeImports = true,
+                            disableTaggedHints = false,
+                            analysis = {
+                                fileEnumerationTimeout = 300,
+                                autoFormatStrings = true,
+                                autoSearchPaths = true,
+                                diagnosticMode = "openFilesOnly",
+                                useLibraryCodeForTypes = true,
+                                autoImportCompletions = true,
+                                typeCheckingMode = "standard",
+                                extraPaths = {
+                                    "packages/coalition-persistent-data-manager/src",
+                                },
+                                inlayHints = {
+                                    variableTypes = true,
+                                    callArgumentNames = true,
+                                    functionReturnTypes = true,
+                                    genericTypes = true,
+                                },
+                            },
+                        },
+                    },
+                },
             }
 
             for name, override in pairs(servers) do
