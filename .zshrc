@@ -40,3 +40,44 @@ function zle-line-init () {
   echo -ne "${VI_MODE_CURSOR_INSERT}"
 }
 zle -N zle-line-init
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+
+# Git worktree helper
+function gw() {
+  local subcommand="$1"
+  local branch="$2"
+
+  if [[ -z "$subcommand" || -z "$branch" ]]; then
+    echo "usage: gw create <branchname> | gw delete <branchname>"
+    return 1
+  fi
+
+  local repo_root
+  repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+    echo "gw: not inside a git repository"
+    return 1
+  }
+
+  local repo
+  repo=$(basename "$repo_root")
+
+  local branch_fs
+  branch_fs="${branch//\//_}"
+
+  local base_dir="$HOME/workspace/worktrees"
+  local worktree_dir="$base_dir/${repo}_${branch_fs}"
+
+  case "$subcommand" in
+    create)
+      mkdir -p "$base_dir" || return 1
+      git worktree add -b "$branch" "$worktree_dir"
+      ;;
+    delete)
+      git worktree remove "$worktree_dir" && git branch -D "$branch"
+      ;;
+    *)
+      echo "usage: gw create <branchname> | gw delete <branchname>"
+      return 1
+      ;;
+  esac
+}
