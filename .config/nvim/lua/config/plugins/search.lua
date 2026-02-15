@@ -4,7 +4,6 @@ return {
         dependencies = {},
         ---@type fzf-lua.Config
         opts = {
-            { "hide", "ivy" },
             defaults = {
                 formatter = "path.filename_first",
             },
@@ -31,7 +30,6 @@ return {
             grep = {
                 hidden = true,
                 no_ignore = false,
-                rg_opts = "--glob '!.git/**'",
             },
             oldfiles = {
                 cwd_only = true,
