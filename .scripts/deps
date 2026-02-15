@@ -13,7 +13,7 @@ brew install gh
 brew install golangci-lint
 brew install goose
 brew install sqlc
-brew install sst/tap/opencode
+brew install anomalyco/tap/opencode
 brew install protobuf
 brew install python@3.13
 brew install 1password-cli

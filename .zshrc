@@ -40,6 +40,7 @@ function zle-line-init () {
   echo -ne "${VI_MODE_CURSOR_INSERT}"
 }
 zle -N zle-line-init
+
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 # Git worktree helper
@@ -81,3 +82,12 @@ function gw() {
       ;;
   esac
 }
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+
+# bun completions
+[ -s "/home/billy/.bun/_bun" ] && source "/home/billy/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
