@@ -1,4 +1,4 @@
-model = "gpt-5.2-codex"
+model = "gpt-5.3-codex"
 model_reasoning_effort = "xhigh"
 approval_policy = "never"
 personality = "friendly"
@@ -15,9 +15,12 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [features]
-collab = true
 steer = true
+multi_agent = true
 
 [mcp_servers.glean_default]
 url = "https://coalition-be.glean.com/mcp/default"
+
+[mcp_servers.datadog]
+url = "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp"
 
