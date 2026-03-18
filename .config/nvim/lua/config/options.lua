@@ -95,8 +95,10 @@ vim.api.nvim_create_user_command("CopyAbsPath", function()
         return
     end
 
-    vim.fn.setreg("+", abs_path)
-    vim.notify('Copied absolute path: "' .. abs_path .. '"', vim.log.levels.INFO, { title = "Clipboard" })
+    vim.schedule(function()
+        vim.fn.setreg("+", abs_path)
+        vim.notify('Copied absolute path: "' .. abs_path .. '"', vim.log.levels.INFO, { title = "Clipboard" })
+    end)
 end, {})
 
 -- Copy relative path to clipboard
@@ -114,8 +116,10 @@ vim.api.nvim_create_user_command("CopyRelPath", function()
     -- If it's in a subdirectory, it'll be e.g., "subdir/file.txt".
     -- If it's in a parent directory, it'll be e.g., "../file.txt".
 
-    vim.fn.setreg("+", rel_path)
-    vim.notify('Copied relative path: "' .. rel_path .. '"', vim.log.levels.INFO, { title = "Clipboard" })
+    vim.schedule(function()
+        vim.fn.setreg("+", rel_path)
+        vim.notify('Copied relative path: "' .. rel_path .. '"', vim.log.levels.INFO, { title = "Clipboard" })
+    end)
 end, {})
 
 -- Auto-close old hidden buffers when there are too many
