@@ -6,7 +6,7 @@ return {
         branch = "main",
         config = function()
             local treesitter = require("nvim-treesitter")
-            local parsers = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "json" }
+            local parsers = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "json", "go", "python" }
 
             treesitter.setup({})
             vim.treesitter.language.register("json", "jsonc")
@@ -14,7 +14,7 @@ return {
 
             vim.api.nvim_create_autocmd("FileType", {
                 group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
-                pattern = { "c", "lua", "vim", "help", "query", "markdown", "json", "jsonc" },
+                pattern = { "c", "lua", "vim", "help", "query", "markdown", "json", "jsonc", "go", "python" },
                 callback = function()
                     pcall(vim.treesitter.start)
                 end,
