@@ -1,16 +1,23 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        lazy = false,
         build = ":TSUpdate",
-        branch = "master",
+        branch = "main",
         config = function()
-            require("nvim-treesitter.configs").setup({
-                ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "jsonc" },
-                auto_install = true,
-                highlight = {
-                    enable = true,
-                    additional_vim_regex_highlighting = true,
-                },
+            local treesitter = require("nvim-treesitter")
+            local parsers = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "json" }
+
+            treesitter.setup({})
+            vim.treesitter.language.register("json", "jsonc")
+            treesitter.install(parsers)
+
+            vim.api.nvim_create_autocmd("FileType", {
+                group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
+                pattern = { "c", "lua", "vim", "help", "query", "markdown", "json", "jsonc" },
+                callback = function()
+                    pcall(vim.treesitter.start)
+                end,
             })
         end,
     },
